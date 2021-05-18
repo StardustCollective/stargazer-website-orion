@@ -16,40 +16,12 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "baseUrl": ".",
-    "paths": {
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@components": [
-        "src/components"
-      ],
-      "@styles/*": [
-        "src/styles/*"
-      ],
-      "@styles": [
-        "src/styles"
-      ],
-      "@public/*": [
-        "public/*"
-      ],
-      "@public": [
-        "public"
-      ],
-      "@redux/*": [
-        "src/redux/*"
-      ],
-      "@redux": [
-        "src/redux"
-      ],
-      "@i18n": [
-        "./i18n"
-      ]
-    }
+    "allowSyntheticDefaultImports": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
   ],
