@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import buyDag from "@redux/slices/buy-dag";
+import buyDag from "./slices/buy-dag";
 
 const rootReducer = combineReducers({ buyDag });
 
