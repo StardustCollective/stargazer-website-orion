@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-import { RootState } from "@redux/reducers";
-import { Layout } from "@components/common";
+import { RootState } from "src/redux/reducers";
+import { Layout } from "src/components/common";
 import {
   BuyDagForm,
   BuyDagFormStep1,
   // BuyDagFormStep2,
   TransactionReceipt,
-} from "@components/uncommon/BuyDagForm";
+} from "src/components/uncommon/BuyDagForm";
 
 import styles from "./index.module.scss";
 

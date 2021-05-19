@@ -1,7 +1,7 @@
 import React from "react";
 import AppsSharpIcon from "@material-ui/icons/AppsSharp";
 import { IconButton } from "@material-ui/core";
-import { Button } from "@components/common/button/index";
+import { Button } from "src/components/common/button/index";
 import styles from "./index.module.scss";
 
 export const Header: React.FC = () => {

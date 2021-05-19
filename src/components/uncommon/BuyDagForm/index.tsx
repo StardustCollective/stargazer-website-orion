@@ -8,9 +8,9 @@ import CreditCardIcon from "@material-ui/icons/CreditCard";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 
-import { setState } from "@redux/actions";
-import { RootState } from "@redux/reducers";
-import { Button } from "@components/common";
+import { setState } from "src/redux/actions";
+import { RootState } from "src/redux/reducers";
+import { Button } from "src/components/common";
 import { StepMarker } from "./StepMarker";
 import { FormInput } from "./FormInput";
 

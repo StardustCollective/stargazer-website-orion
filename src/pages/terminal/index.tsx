@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Layout } from "@components/common";
+import { Layout } from "src/components/common";
 
 import styles from "./index.module.scss";
 
