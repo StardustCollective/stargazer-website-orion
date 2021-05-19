@@ -1,7 +1,7 @@
 # npm
 node_modules
 # build folder
-build
+build/
 # environment variables
 .env
 .env.*
