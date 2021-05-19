@@ -1,0 +1,26 @@
+@import "../../../styles/global.scss";
+
+.bodyWrapper {
+  display: flex;
+  flex-direction: row;
+  .contentWrapper {
+    width: calc(100vw - 180px);
+    overflow-y: auto;
+    padding: 36px;
+    position: relative;
+    background-color: $background;
+    .bottomLogoWrapper {
+      display: flex;
+      justify-content: center;
+      position: absolute;
+      bottom: 0;
+      width: calc(100% - 72px);
+      z-index: -1;
+      img {
+        width: 163px;
+        clip-path: polygon(0px 0px, 100% 0px, 100% 144px, 0px 144px);
+        user-select: none;
+      }
+    }
+  }
+}

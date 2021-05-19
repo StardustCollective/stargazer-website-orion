@@ -1,0 +1,49 @@
+@import "../../../../styles/global.scss";
+
+.stepMarker {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+  span {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: $black;
+    padding-bottom: 12px;
+  }
+  .stepsWrapper {
+    display: flex;
+    align-items: center;
+    .step {
+      background-color: $gray-normal;
+      width: 24px;
+      height: 24px;
+      border-radius: 12px;
+      margin-right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &.active {
+        background-color: $primary-600;
+      }
+      span {
+        color: $white;
+        padding-bottom: 0;
+        user-select: none;
+      }
+      svg {
+        color: $white;
+        width: 22px;
+        user-select: none;
+      }
+    }
+    .line {
+      width: 48px;
+      height: 0px;
+      margin-right: 12px;
+      border: 1px solid #521e8a;
+    }
+  }
+}
