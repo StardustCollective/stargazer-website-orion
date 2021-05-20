@@ -58,7 +58,6 @@ const BuyDag: React.FC = () => {
   };
 
   return (
-    <Layout>
       <div className={styles.pageWrapper}>
         {step === 1 && (
           <BuyDagForm
@@ -89,7 +88,6 @@ const BuyDag: React.FC = () => {
           />
         )} */}
       </div>
-    </Layout>
   );
 };
 

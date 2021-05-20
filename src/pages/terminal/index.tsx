@@ -5,7 +5,7 @@ import { Layout } from "src/components/common";
 import styles from "./index.module.scss";
 
 const Terminal: React.FC = () => {
-  return <Layout>This is Terminal Page</Layout>;
+  return <div>This is Terminal Page</div>;
 };
 
 export default Terminal;

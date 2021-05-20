@@ -6,7 +6,7 @@ import styles from "./index.module.scss";
 
 const TermsConditions: React.FC = () => {
   return (
-    <Layout>
+    <div>
       <div className={styles.pageWrapper}>
         <div className={styles.header}>
           <img src="/images/bottom-logo.svg" alt="logo" />
@@ -349,7 +349,7 @@ const TermsConditions: React.FC = () => {
           </p>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

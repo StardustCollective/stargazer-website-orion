@@ -6,7 +6,7 @@ import styles from "./index.module.scss";
 
 const PrivacyPolicy: React.FC = () => {
   return (
-    <Layout>
+    <div>
       <div className={styles.pageWrapper}>
         <div className={styles.header}>
           <img src="/images/bottom-logo.svg" alt="logo" />
@@ -106,7 +106,7 @@ const PrivacyPolicy: React.FC = () => {
           </p>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 
