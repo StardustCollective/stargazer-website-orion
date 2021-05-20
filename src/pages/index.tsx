@@ -44,6 +44,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 /////////////////////////
 
 const PAGE_TITLES = {
+  home: 'home',
   connectWallet: 'Connect Wallet',
   buyDag: 'Buy DAG',
   portfolio: 'Portfolio',
@@ -58,6 +59,12 @@ const PAGE_TITLES = {
 /////////////////////////
 
 export const PAGES: Array<Page> = [
+  {
+    title: PAGE_TITLES.home,
+    route: "/",
+    surface: BuyDag,
+    icon: undefined,
+  },
   {
     title: PAGE_TITLES.connectWallet,
     route: "/connect-wallet",
