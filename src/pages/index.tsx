@@ -39,9 +39,8 @@ import PersonIcon from "@material-ui/icons/Person";
 import SwapCallsIcon from "@material-ui/icons/SwapCalls";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 
-
 /////////////////////////
-// Page Labels
+// Page Titles
 /////////////////////////
 
 const PAGE_TITLES = {
@@ -53,7 +52,6 @@ const PAGE_TITLES = {
   termsAndCondition: 'Terms & Conditions',
   privacyPolicy: 'Privacy Policy',
 }
-
 
 /////////////////////////
 // All Pages List
@@ -104,7 +102,6 @@ export const PAGES: Array<Page> = [
   }
 ];
 
-
 /////////////////////////
 // Page List
 /////////////////////////
@@ -125,7 +122,7 @@ const FOOTER_PAGE_LIST: Array<string> = [
 ]
 
 ///////////////////////////////////////
-// Page List Filter Helper Fucntions
+// Page List Filter - Helper Functions
 ///////////////////////////////////////
 
 const getSideBarPages = (): Array<Page> => {
@@ -140,10 +137,9 @@ const getFooterPages = (): Array<Page> => {
   })
 }
 
-
-///////////////////////////////////
-// Page Rendering Helper Function
-///////////////////////////////////
+///////////////////////////////////////
+// Page Rendering - Helper Functions
+///////////////////////////////////////
 
 const LoadRoutes = () => {
   return (
