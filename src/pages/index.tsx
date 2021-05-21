@@ -62,7 +62,6 @@ export const PAGES: Array<Page> = [
     title: undefined,
     route: "/",
     surface: BuyDag,
-    icon: undefined,
   },
   {
     title: PAGE_TITLES.connectWallet,
@@ -111,13 +110,11 @@ export const PAGES: Array<Page> = [
     title: PAGE_TITLES.termsAndCondition,
     route: "/terms-and-conditions",
     surface: TermsAndConditions,
-    icon: undefined,
   },
   {
     title: PAGE_TITLES.privacyPolicy,
     route: '/privacy-policy',
     surface: PrivacyPolicy,
-    icon: undefined,
   }
 ];
 
