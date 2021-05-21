@@ -11,6 +11,14 @@
   .header {
     padding: 22px 24px 21px 24px;
     border-bottom: 1px solid $gray-light;
+    display: flex;
+    align-items: center;
+
+    .backButton {
+      width: 16px;
+      height: 16px;
+      margin-right: 12px;
+    }
 
     .title {
       font-family: Inter;
@@ -28,6 +36,21 @@
     height: 396px;
     box-sizing: border-box;
     position: relative;
+
+    .labelRow {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      font-size: 12px;
+      font-weight: 500;
+      color: $gray-dark;
+
+      span {
+        color: $black;
+        margin-bottom: 6px;
+      }
+    }
+
     .item {
       width: 100%;
       height: 36px;
@@ -108,7 +131,7 @@
         }
       }
     }
-    button {
+    .button {
       width: 100%;
       position: absolute;
       bottom: 24px;
@@ -152,15 +175,25 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
+        align-items: center;
         .trItem {
           padding: 0;
+          border-bottom: none;
+
+          &:last-child {
+            text-align: left;
+          }
         }
+        padding-bottom: 16px;
+        border-bottom: 1px solid $gray-100;
       }
       .trItem {
         width: 100%;
-        border-bottom: 1px solid #f5f5f5;
+        border-bottom: 1px solid $gray-100;
         padding: 16px 0;
         box-sizing: border-box;
+        position: relative;
+
         &.noBorder {
           border: none;
         }
@@ -185,7 +218,37 @@
           line-height: 15px;
           overflow-wrap: break-word;
           color: $gray-dark;
+          &.transaction {
+            display: inline-block;
+            width: calc(100% - 36px);
+          }
         }
+        .txlink {
+          background: $gray-dark;
+          right: 0;
+          top: 36px;
+          position: absolute;
+
+          svg {
+            color: white !important;
+          }
+        }
+      }
+      .errorItem {
+        background: #e0d3ee;
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 6px;
+        padding: 12px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 14px;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
+        color: $primary-600;
       }
     }
   }

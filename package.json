@@ -10,6 +10,7 @@
     "@reduxjs/toolkit": "^1.5.0",
     "classnames": "^2.2.6",
     "country-locale-map": "^1.4.12",
+    "lodash": "^4.17.21",
     "prettier": "^2.2.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",

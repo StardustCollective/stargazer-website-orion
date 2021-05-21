@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import classnames from "classnames";
 import clm from "country-locale-map";
@@ -7,6 +7,13 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import CreditCardIcon from "@material-ui/icons/CreditCard";
 import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import IconButton from "@material-ui/core/IconButton";
+import CallMadeRoundedIcon from "@material-ui/icons/CallMadeRounded";
+import MasterCardIcon from "src/assets/icons/master-card.svg";
+import VisaCardIcon from "src/assets/icons/visa-card.svg"
+import UsdIcon from "src/assets/icons/usd.svg";
+import DagIcon from 'src/assets/icons/dag.svg';
 
 import { setState } from "src/redux/actions";
 import { RootState } from "src/redux/reducers";
@@ -29,6 +36,9 @@ interface FIWProps {
   children: any;
   label: string;
 }
+
+const DAG_PRICE_URL = "https://www.stargazer.network/api/price?symbol=DAG-USDT";
+
 export const FormItemWrapper: React.FC<FIWProps> = ({
   children,
   label,
@@ -68,8 +78,9 @@ export const Card: React.FC = () => {
     <div className={classnames(styles.item, styles.credit)}>
       <CreditCardIcon />
       <span className={classnames(styles.label, styles.credit)}>New Card</span>
-      <img src="/icons/master-card.svg" />
-      <img src="/icons/visa-card.svg" />
+
+      <img src={MasterCardIcon} />
+      <img src={VisaCardIcon} />
     </div>
   );
 };
@@ -77,10 +88,30 @@ export const Card: React.FC = () => {
 interface BDFProp {
   nextStep: (usdValue, dagValue) => void;
 }
+
+type LastPrice = {
+  amount: number;
+  time: number;
+};
+
 export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
-  const conversionRate = 0.06; /// 1 DAG is 0.06 USD
   const dispatch = useDispatch();
+  const [lastPrice, setLastPrice] = useState<LastPrice>({ amount: 0, time: 0 });
   const { usdValue, dagValue } = useSelector((root: RootState) => root.buyDag);
+
+  useEffect(() => {
+    dispatch(
+      setState({
+        usdValue: "",
+      }),
+    );
+    dispatch(
+      setState({
+        dagValue: "",
+      }),
+    );
+  }, []);
+
   const setUsdValue = (value) => {
     dispatch(
       setState({
@@ -95,19 +126,31 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
       }),
     );
   };
-  const handleUsdValueChange = (e) => {
+  const getDagPrice = async () => {
+    // console.log(lastPrice.time, Date.now());
+    if (lastPrice.time + 15000 > Date.now()) {
+      return lastPrice.amount;
+    }
+    const res = await fetch(DAG_PRICE_URL);
+    const b = await res.json();
+    const amount = +b.price;
+    setLastPrice({ amount, time: Date.now() });
+    return amount;
+  };
+  const handleUsdValueChange = async (e) => {
     const inputValue = e.target.value;
     if (inputValue === "" || inputValue === "0") {
       setDagValue(0);
       setUsdValue(0);
     } else if (isFinite(inputValue)) {
-      const nUsd = parseFloat(inputValue);
+      const nUsd = Math.min(2000, parseFloat(inputValue));
       setUsdValue(inputValue);
-      setDagValue((nUsd / conversionRate).toFixed(6));
+      const conversionRate = await getDagPrice();
+      setDagValue((nUsd / conversionRate).toFixed(8));
     }
   };
 
-  const handleDagValueChange = (e) => {
+  const handleDagValueChange = async (e) => {
     const inputValue = e.target.value;
     if (inputValue === "" || inputValue === "0") {
       setDagValue(0);
@@ -115,10 +158,11 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
     } else if (isFinite(inputValue)) {
       const nDag = parseFloat(inputValue);
       setDagValue(inputValue);
-      setUsdValue((nDag * conversionRate).toFixed(6));
+      const conversionRate = await getDagPrice();
+      setUsdValue((nDag * conversionRate).toFixed(2));
     }
   };
-
+  
   return (
     <div className={styles.formWrapper}>
       <div className={styles.header}>
@@ -128,19 +172,22 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
         <FormItem
           label="Spend"
           expandable={true}
-          logoUrl="/icons/usd.svg"
+          logoUrl={UsdIcon}
           currency="USD"
           onValueChange={handleUsdValueChange}
           value={usdValue !== 0 ? usdValue.toString() : ""}
         />
         <FormItem
           label="Buy"
-          logoUrl="/icons/dag.svg"
+          logoUrl={DagIcon}
           currency="DAG"
           onValueChange={handleDagValueChange}
           value={dagValue !== 0 ? dagValue.toString() : ""}
         />
         <Card />
+        <div className={styles.labelRow}>
+          <span>Processing Fee</span>5%
+        </div>
         <Button
           type="button"
           theme="primary"
@@ -156,9 +203,13 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
 };
 
 interface BDF1Prop {
+  prevStep: () => void;
   nextStep: ({ cardName, cardNumber, expiryDate, cvv }) => void;
 }
-export const BuyDagFormStep1: React.FC<BDF1Prop> = ({ nextStep }: BDF1Prop) => {
+export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
+  prevStep,
+  nextStep,
+}: BDF1Prop) => {
   const dispatch = useDispatch();
   const { cardName, cardNumber, expiryDate, cvv, email } = useSelector(
     (root: RootState) => root.buyDag,
@@ -168,6 +219,35 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({ nextStep }: BDF1Prop) => {
   const [errExpDate, setErrExpDate] = useState("");
   const [errCvv, setErrCvv] = useState("");
   const [errEmail, setErrEmail] = useState("");
+
+  useEffect(() => {
+    dispatch(
+      setState({
+        cardName: "",
+      }),
+    );
+    dispatch(
+      setState({
+        cardNumber: "",
+      }),
+    );
+    dispatch(
+      setState({
+        expiryDate: "",
+      }),
+    );
+    dispatch(
+      setState({
+        cvv: "",
+      }),
+    );
+    dispatch(
+      setState({
+        email: "",
+      }),
+    );
+  }, []);
+
   const validDate = (dValue) => {
     let result = false;
     const pattern = /^\d{2}$/;
@@ -209,6 +289,13 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({ nextStep }: BDF1Prop) => {
       onSubmit={() => nextStep({ cardName, cardNumber, expiryDate, cvv })}
     >
       <div className={styles.header}>
+        <IconButton
+          size="small"
+          className={styles.backButton}
+          onClick={prevStep}
+        >
+          <ArrowBackIcon fontSize="small" />
+        </IconButton>
         <div className={styles.title}>Buy with Card</div>
       </div>
       <div className={styles.body}>
@@ -456,56 +543,120 @@ export const BuyDagFormStep2: React.FC<BDF2Prop> = ({
 
 interface TransactionReceiptProp {
   loading: boolean;
+  receipt: any;
+  onDone: () => void;
 }
 export const TransactionReceipt: React.FC<TransactionReceiptProp> = ({
   loading,
+  receipt,
+  onDone,
 }: TransactionReceiptProp) => {
+  // const [balance, setBalance] = useState(0);
+  //
+  // useEffect(() => {
+  //   window["stargazer"]
+  //     .request({ method: "getBalance" })
+  //     .then((value) => setBalance(value));
+  // }, [loading]);
+
+  const DAG_EXPLORER_SEARCH = {
+    main: "https://www.dagexplorer.io/search?term=",
+    ceres: "http://lb.exchanges.constellationnetwork.io:9000/transaction/",
+  };
+
+  const handleOpenLink = (txHash: string, network: string) => {
+    window.open(`${DAG_EXPLORER_SEARCH[network]}${txHash}`, "_blank");
+  };
+
   return (
     <div className={styles.formWrapper}>
       <div className={styles.header}>
-        <div className={styles.title}>Transaction receipt</div>
+        <div className={styles.title}>
+          {!loading && receipt.txHash === undefined
+            ? "Transaction Error"
+            : "Transaction receipt"}
+        </div>
       </div>
       <div
         className={classnames(styles.body, styles.transactionReceipt, {
           [styles.loading]: loading,
         })}
       >
-        {loading && (
+        {loading ? (
           <>
             <HourglassEmptyIcon />
             <span>Waiting for Tokens</span>
           </>
-        )}
-        {!loading && (
+        ) : (
           <>
-            <div className={styles.trWrapper}>
-              <div className={styles.trItem}>
-                <p className={styles.title}>$DAG amount</p>
-                <span className={styles.description}>10000 $DAG </span>
-              </div>
-              <SwapHorizIcon />
-              <div className={classnames(styles.trItem, styles.trMargin)}>
-                <p className={styles.title}>Paid</p>
-                <span className={styles.description}>$600 USD </span>
-              </div>
-            </div>
+            {receipt.txHash !== undefined ? (
+              <>
+                <div className={styles.trWrapper}>
+                  <div className={styles.trItem}>
+                    <p className={styles.title}>$DAG amount</p>
+                    <span className={styles.description}>
+                      {Number(receipt.dagQtyPurchased).toFixed(2)} $DAG{" "}
+                    </span>
+                  </div>
+                  <SwapHorizIcon />
+                  <div className={classnames(styles.trItem, styles.trMargin)}>
+                    <p className={styles.title}>Paid</p>
+                    <span className={styles.description}>
+                      ${receipt.amountChargedUSD / 100} USD{" "}
+                    </span>
+                  </div>
+                </div>
 
-            <div className={styles.trItem}>
-              <p className={styles.title}>Receipt ID</p>
-              <span className={styles.description}>
-                b160c49f009c1ec99abe944a957c260c03f7200b4959eee229f2de7f1db3fcf1
-              </span>
-            </div>
-            <div className={styles.trItem}>
-              <p className={styles.title}>New $DAG Balance</p>
-              <span className={styles.description}>510000 $DAG</span>
-            </div>
-            <div className={classnames(styles.trItem, styles.noBorder)}>
-              <p className={styles.title}>Timestamp</p>
-              <span className={styles.description}>Apr 17 2021 3:50:01 pm</span>
-            </div>
-            <Button type="button" theme="primary" variant={styles.button}>
-              DONE
+                <div className={styles.trItem}>
+                  <p className={styles.title}>Transaction ID</p>
+                  <span
+                    className={classnames(
+                      styles.description,
+                      styles.transaction,
+                    )}
+                  >
+                    {receipt.txHash}
+                  </span>
+                  <IconButton
+                    size="small"
+                    className={styles.txlink}
+                    onClick={() =>
+                      handleOpenLink(receipt.txHash, receipt.network)
+                    }
+                  >
+                    <CallMadeRoundedIcon fontSize="small" />
+                  </IconButton>
+                </div>
+                {/*<div className={styles.trItem}>*/}
+                {/*  <p className={styles.title}>New $DAG Balance</p>*/}
+                {/*  <span className={styles.description}>${balance} $DAG</span>*/}
+                {/*</div>*/}
+                <div className={classnames(styles.trItem, styles.noBorder)}>
+                  <p className={styles.title}>Timestamp</p>
+                  <span className={styles.description}>
+                    {new Date(
+                      receipt["receipt"].updatedAt * 1000,
+                    ).toLocaleString()}
+                  </span>
+                </div>
+              </>
+            ) : (
+              <div className={styles.errorItem}>
+                {`${receipt.name}:  ${receipt.message}`}
+              </div>
+              // <div className={styles.errorItem}>
+              //   This service is currently unavailable.
+              //   <br />
+              //   Please try again later.
+              // </div>
+            )}
+            <Button
+              type="button"
+              theme="primary"
+              variant={styles.button}
+              onClick={onDone}
+            >
+              {receipt.txHash !== undefined ? "DONE" : "CLOSE"}
             </Button>
           </>
         )}
