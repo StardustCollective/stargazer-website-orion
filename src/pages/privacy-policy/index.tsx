@@ -1,5 +1,5 @@
 import React from "react";
-
+import logo from "src/assets/images/bottom-logo.svg"
 import { Layout } from "src/components/common";
 
 import styles from "./index.module.scss";
@@ -9,7 +9,7 @@ const PrivacyPolicy: React.FC = () => {
     <div>
       <div className={styles.pageWrapper}>
         <div className={styles.header}>
-          <img src="/images/bottom-logo.svg" alt="logo" />
+          <img src={logo} alt="logo" />
         </div>
         <div className={styles.body}>
           <p className={styles.TYPO_BIG}>Privacy Policy</p>

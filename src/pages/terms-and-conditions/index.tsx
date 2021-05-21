@@ -1,12 +1,13 @@
 import React from "react";
-
+import logo from "src/assets/images/bottom-logo.svg"
 import styles from "./index.module.scss";
+
 
 const TermsConditions: React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.header}>
-        <img src="/images/bottom-logo.svg" alt="logo" />
+        <img src={logo} alt="logo" />
       </div>
       <div className={styles.body}>
         <p className={styles.TYPO_BIG}>Terms and Conditions</p>
