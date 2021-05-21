@@ -68,31 +68,44 @@ export const PAGES: Array<Page> = [
     title: PAGE_TITLES.connectWallet,
     route: "/connect-wallet",
     surface: ConnectWallet,
-    icon: AccountBalanceWalletIcon,
+    navigation: {
+      icon: AccountBalanceWalletIcon,
+    }
   },
   { 
     title: PAGE_TITLES.buyDag,
     route: "/buy-dag",
     surface: BuyDag,
-    icon: CreditCardIcon,
+    navigation: {
+      icon: CreditCardIcon,
+    }
   },
   {
     title: PAGE_TITLES.portfolio,
     route: "/portfolio",
     surface: Portfolio,
-    icon: PersonIcon,
+    navigation: {
+      icon: PersonIcon,
+      disabled: true,
+    }
   },
   {
     title: PAGE_TITLES.swap,
     route: "/swap",
     surface: Swap,
-    icon: SwapCallsIcon,
+    navigation: {
+      icon: SwapCallsIcon,
+      disabled: true,
+    }
   },
   {
     title: PAGE_TITLES.terminal,
     route: "/terminal",
     surface: Terminal,
-    icon: DashboardIcon,
+    navigation: {
+      icon: DashboardIcon,
+      disabled: true,
+    }
   }, 
   {
     title: PAGE_TITLES.termsAndCondition,
