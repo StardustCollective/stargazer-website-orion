@@ -3,6 +3,7 @@ import AppsSharpIcon from "@material-ui/icons/AppsSharp";
 import { IconButton } from "@material-ui/core";
 // import { Button } from "@components/common/button/index";
 import styles from "./index.module.scss";
+import LogoImage from "src/assets/images/logo.png";
 
 export const Header: React.FC = () => {
   let currentAccount;
@@ -68,7 +69,7 @@ export const Header: React.FC = () => {
       <div className={styles.left}>
         <img
           className={styles.logo}
-          src="/images/logo.png"
+          src={LogoImage}
           alt="logo"
           width="95"
           height="44"
