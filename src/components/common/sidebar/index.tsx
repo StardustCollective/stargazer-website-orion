@@ -12,14 +12,18 @@ const RenderLinks = ({linkData}): JSX.Element => {
 
   return <>{linkData.map(page => {
     let itemStyle = styles.item;
+    let Icon = undefined;
     if(get(page, "navigation.disabled")){
       itemStyle = styles.itemDisabled;
     }
+    if(get(page, "navigation.icon")){
+      Icon = page.navigation.icon;
+    }
     return (
-      <Link to={page.route}>
+      <Link key={page.title} to={page.route}>
         <div className={itemStyle}>
-          {page.icon &&
-            <page.icon />
+          {Icon &&
+            <Icon />
           }
           <span className={styles.label}>{page.title}</span>
         </div>
