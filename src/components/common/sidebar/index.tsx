@@ -1,18 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./index.module.scss";
-import { Page } from 'src/interfaces/page';
+import { Page } from "src/interfaces/page";
+import get from "lodash/get";
 import {
   getSideBarPages,
   getFooterPages
 } from 'src/pages';
 
-const RenderLink = ({linkData}): JSX.Element => {
+const RenderLinks = ({linkData}): JSX.Element => {
 
   return <>{linkData.map(page => {
+    let itemStyle = styles.item;
+    if(get(page, "navigation.disabled")){
+      itemStyle = styles.itemDisabled;
+    }
     return (
       <Link to={page.route}>
-        <div className={styles.item}>
+        <div className={itemStyle}>
           {page.icon &&
             <page.icon />
           }
@@ -32,10 +37,10 @@ export const Sidebar: React.FC = () => {
   return (
       <div className={styles.sidebar}>
         <div className={styles.body}>
-          <RenderLink linkData={sideBarPages} />
+          <RenderLinks linkData={sideBarPages} />
         </div>
         <div className={styles.footer}>
-          <RenderLink linkData={footerLinkPages} />
+          <RenderLinks linkData={footerLinkPages} />
         </div>
       </div>
   );

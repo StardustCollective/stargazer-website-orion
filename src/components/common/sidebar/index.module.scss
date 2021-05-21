@@ -39,6 +39,23 @@
         margin-left: 8px;
       }
     }
+    .itemDisabled {
+      display: flex;
+      flex-direction: row;
+      padding: 12px 0;
+      color: $gray-normal;
+      pointer-events: none;
+      svg {
+        height: 16px;
+      }
+      .label {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 18px;
+        margin-left: 8px;
+      }
+    }
   }
 
   .footer {
@@ -47,7 +64,15 @@
       font-weight: 500;
       font-size: 12px;
       line-height: 18px;
-      color: $gray-light;
+      &:hover {
+        color: $primary-600;
+        .label {
+          color: $primary-600;
+        }
+      }
+      .label {
+        color: $black-100;
+      }
       padding: 4px 0;
       user-select: none;
       cursor: pointer;
