@@ -124,7 +124,6 @@ export const PAGES: Array<Page> = [
 
 // Sidebar Links - Filters by title
 const SIDE_BAR_PAGE_LIST: Array<string> = [
-  PAGE_TITLES.connectWallet,
   PAGE_TITLES.buyDag,
   PAGE_TITLES.portfolio,
   PAGE_TITLES.swap,
