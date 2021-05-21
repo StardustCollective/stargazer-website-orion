@@ -3,7 +3,7 @@
 // Module Imports
 /////////////////////////
 
-import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
+import { Switch, Redirect, Route, BrowserRouter as Router } from "react-router-dom";
 
 /////////////////////////
 // Components
@@ -53,27 +53,33 @@ const PAGE_TITLES = {
   privacyPolicy: 'Privacy Policy',
 }
 
+const PAGE_ROUTES = {
+  home: "/",
+  connectWallet: "/connect-wallet",
+  buyDag: "/buy-dag",
+  portfolio: "/portfolio",
+  swap: "/swap",
+  terminal: "/terminal",
+  termsAndCondition: "/terms-and-conditions",
+  privacyPolicy: "/privacy-policy",
+}
+
 /////////////////////////
 // All Pages List
 /////////////////////////
 
 export const PAGES: Array<Page> = [
   {
-    title: undefined,
-    route: "/",
-    surface: BuyDag,
-  },
-  {
     title: PAGE_TITLES.connectWallet,
-    route: "/connect-wallet",
+    route: PAGE_ROUTES.connectWallet,
     surface: ConnectWallet,
     navigation: {
       icon: AccountBalanceWalletIcon,
     }
   },
-  { 
+  {
     title: PAGE_TITLES.buyDag,
-    route: "/buy-dag",
+    route: PAGE_ROUTES.buyDag,
     surface: BuyDag,
     navigation: {
       icon: CreditCardIcon,
@@ -81,7 +87,7 @@ export const PAGES: Array<Page> = [
   },
   {
     title: PAGE_TITLES.portfolio,
-    route: "/portfolio",
+    route: PAGE_ROUTES.portfolio,
     surface: Portfolio,
     navigation: {
       icon: PersonIcon,
@@ -90,7 +96,7 @@ export const PAGES: Array<Page> = [
   },
   {
     title: PAGE_TITLES.swap,
-    route: "/swap",
+    route: PAGE_ROUTES.swap,
     surface: Swap,
     navigation: {
       icon: SwapCallsIcon,
@@ -99,21 +105,21 @@ export const PAGES: Array<Page> = [
   },
   {
     title: PAGE_TITLES.terminal,
-    route: "/terminal",
+    route: PAGE_ROUTES.terminal,
     surface: Terminal,
     navigation: {
       icon: DashboardIcon,
       disabled: true,
     }
-  }, 
+  },
   {
     title: PAGE_TITLES.termsAndCondition,
-    route: "/terms-and-conditions",
+    route: PAGE_ROUTES.termsAndCondition,
     surface: TermsAndConditions,
   },
   {
     title: PAGE_TITLES.privacyPolicy,
-    route: '/privacy-policy',
+    route: PAGE_ROUTES.privacyPolicy,
     surface: PrivacyPolicy,
   }
 ];
@@ -159,6 +165,15 @@ const getFooterPages = (): Array<Page> => {
 const LoadRoutes = () => {
   return (
     <Switch>
+      <Route
+        exact
+        path={PAGE_ROUTES.home}
+        render={() => {
+          return (
+            <Redirect to={PAGE_ROUTES.buyDag}/>
+          );
+        }}
+      />
       {PAGES.map(page => {
         return (
           <Route path={page.route}>
@@ -174,7 +189,7 @@ const LoadPages = () => {
   return (
     <Router>
       <Layout>
-          <LoadRoutes />
+        <LoadRoutes />
       </Layout>
     </Router>
   )
