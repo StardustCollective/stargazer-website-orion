@@ -10,6 +10,10 @@ import SwapHorizIcon from "@material-ui/icons/SwapHoriz";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import IconButton from "@material-ui/core/IconButton";
 import CallMadeRoundedIcon from "@material-ui/icons/CallMadeRounded";
+import MasterCardIcon from "src/assets/icons/master-card.svg";
+import VisaCardIcon from "src/assets/icons/visa-card.svg"
+import UsdIcon from "src/assets/icons/usd.svg";
+import DagIcon from 'src/assets/icons/dag.svg';
 
 import { setState } from "src/redux/actions";
 import { RootState } from "src/redux/reducers";
@@ -74,8 +78,9 @@ export const Card: React.FC = () => {
     <div className={classnames(styles.item, styles.credit)}>
       <CreditCardIcon />
       <span className={classnames(styles.label, styles.credit)}>New Card</span>
-      <img src="/icons/master-card.svg" />
-      <img src="/icons/visa-card.svg" />
+
+      <img src={MasterCardIcon} />
+      <img src={VisaCardIcon} />
     </div>
   );
 };
@@ -157,7 +162,7 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
       setUsdValue((nDag * conversionRate).toFixed(2));
     }
   };
-
+  
   return (
     <div className={styles.formWrapper}>
       <div className={styles.header}>
@@ -167,14 +172,14 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
         <FormItem
           label="Spend"
           expandable={true}
-          logoUrl="/icons/usd.svg"
+          logoUrl={UsdIcon}
           currency="USD"
           onValueChange={handleUsdValueChange}
           value={usdValue !== 0 ? usdValue.toString() : ""}
         />
         <FormItem
           label="Buy"
-          logoUrl="/icons/dag.svg"
+          logoUrl={DagIcon}
           currency="DAG"
           onValueChange={handleDagValueChange}
           value={dagValue !== 0 ? dagValue.toString() : ""}
