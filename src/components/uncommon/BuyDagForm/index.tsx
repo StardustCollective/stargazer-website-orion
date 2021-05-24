@@ -21,7 +21,13 @@ import { Button } from "src/components/common";
 import { StepMarker } from "./StepMarker";
 import { FormInput } from "./FormInput";
 
+
 import styles from "./index.module.scss";
+
+const MIN_SPEND_ERROR_STRING = 'The Minimum Spend is $10';
+const MAX_SPEND_ERROR_STRING = 'The Maximum Spend is $1000';
+const MAX_SPEND_NUMBER = 1000;
+const MIN_SPEND_NUMBER = 10;
 
 interface IProps {
   label: string;
@@ -101,9 +107,26 @@ type LastPrice = {
 };
 
 export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
+
   const dispatch = useDispatch();
   const [lastPrice, setLastPrice] = useState<LastPrice>({ amount: 0, time: 0 });
   const { usdValue, dagValue } = useSelector((root: RootState) => root.buyDag);
+  const [isSpendError, setIsSpendError] = useState<boolean>(false);
+  const [spendErrorMessage, setSpendErrorMessage] = useState<string>(MIN_SPEND_ERROR_STRING);
+
+  useEffect( () => {
+    if(usdValue > 0 && usdValue < MIN_SPEND_NUMBER){
+      // alert('The minimum spend is $10')
+      setIsSpendError(true);
+      setSpendErrorMessage(MIN_SPEND_ERROR_STRING);
+    }else if(usdValue > MAX_SPEND_NUMBER){
+      // alert('The maximum spend is $10000')
+      setIsSpendError(true);
+      setSpendErrorMessage(MAX_SPEND_ERROR_STRING);
+    }else{
+      setIsSpendError(false);
+    }
+  }, [usdValue]);
 
   useEffect(() => {
     dispatch(
@@ -180,6 +203,8 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
           expandable={true}
           logoUrl={UsdIcon}
           currency="USD"
+          error={isSpendError}
+          errMsg={spendErrorMessage}
           onValueChange={handleUsdValueChange}
           value={usdValue !== 0 ? usdValue.toString() : ""}
         />
@@ -199,7 +224,7 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
           theme="primary"
           variant={styles.button}
           onClick={() => nextStep(usdValue, dagValue)}
-          disabled={usdValue === 0 || dagValue === 0}
+          disabled={usdValue === 0 || dagValue === 0 || usdValue < MIN_SPEND_NUMBER || usdValue > MAX_SPEND_NUMBER}
         >
           Buy DAG
         </Button>
