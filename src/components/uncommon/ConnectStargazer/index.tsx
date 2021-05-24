@@ -37,7 +37,7 @@ const ConnectStargazer: FC<IConnectStargazer> = ({
       <div className={styles.body}>
         <img src="/images/logo.svg" width="160" />
         <label>
-          To buy DAG with your credit card, click on the button below.
+          To donate to the Stardust Foundation and get DAG, click on the button below.
         </label>
         {!installed && (
           <span>
