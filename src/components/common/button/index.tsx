@@ -47,7 +47,7 @@ export const Button: FC<IButton> = ({
 
   const clickHandler = () => {
     // if (linkTo !== "#") history.push(linkTo);
-    console.log("Click Handler");
+    // console.log("Click Handler");
   };
 
   return (

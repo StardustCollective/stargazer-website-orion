@@ -45,7 +45,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 
 const PAGE_TITLES = {
   connectWallet: 'Connect Wallet',
-  buyDag: 'Buy DAG',
+  getDag: 'Get DAG',
   portfolio: 'Portfolio',
   swap: 'Swap',
   terminal: 'Terminal',
@@ -56,7 +56,7 @@ const PAGE_TITLES = {
 const PAGE_ROUTES = {
   home: "/",
   connectWallet: "/connect-wallet",
-  buyDag: "/buy-dag",
+  getDag: "/get-dag",
   portfolio: "/portfolio",
   swap: "/swap",
   terminal: "/terminal",
@@ -78,8 +78,8 @@ export const PAGES: Array<Page> = [
     }
   },
   {
-    title: PAGE_TITLES.buyDag,
-    route: PAGE_ROUTES.buyDag,
+    title: PAGE_TITLES.getDag,
+    route: PAGE_ROUTES.getDag,
     surface: BuyDag,
     navigation: {
       icon: CreditCardIcon,
@@ -130,7 +130,7 @@ export const PAGES: Array<Page> = [
 
 // Sidebar Links - Filters by title
 const SIDE_BAR_PAGE_LIST: Array<string> = [
-  PAGE_TITLES.buyDag,
+  PAGE_TITLES.getDag,
   PAGE_TITLES.portfolio,
   PAGE_TITLES.swap,
   PAGE_TITLES.terminal,
@@ -170,7 +170,7 @@ const LoadRoutes = () => {
         path={PAGE_ROUTES.home}
         render={() => {
           return (
-            <Redirect to={PAGE_ROUTES.buyDag}/>
+            <Redirect to={PAGE_ROUTES.getDag}/>
           );
         }}
       />

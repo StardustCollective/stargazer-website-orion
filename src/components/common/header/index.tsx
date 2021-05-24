@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import AppsSharpIcon from "@material-ui/icons/AppsSharp";
 import { IconButton } from "@material-ui/core";
-// import { Button } from "@components/common/button/index";
 import styles from "./index.module.scss";
 import LogoImage from "src/assets/images/logo.png";
 
@@ -21,37 +20,6 @@ export const Header: React.FC = () => {
       }, 3000);
     }
   }, []);
-
-  // const handleClick = () => {
-  //   //handleEthEnable();
-  //   handleStargazerEnable();
-  // };
-
-  // const handleStargazerEnable = () => {
-  //   window["stargazer"]
-  //     .enable()
-  //     .then((account) => {
-  //       console.log("Successfully connected to Stargazer.", account);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // };
-
-  // const handleEthEnable = () => {
-  //   window["ethereum"]
-  //     .request({ method: "eth_requestAccounts" })
-  //     .then(handleAccountsChanged)
-  //     .catch((err) => {
-  //       if (err.code === 4001) {
-  //         // EIP-1193 userRejectedRequest error
-  //         // If this happens, the user rejected the connection request.
-  //         console.log("Please connect to MetaMask.");
-  //       } else {
-  //         console.error(err);
-  //       }
-  //     });
-  // };
 
   const handleAccountsChanged = async (accounts) => {
     if (accounts.length === 0) {
