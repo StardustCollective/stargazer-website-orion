@@ -3,6 +3,8 @@ import classnames from "classnames";
 import ReactFlagsSelect from "react-flags-select";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import masterCardIcon from "src/assets/icons/master-card.svg"
+import visaCardIcon from "src/assets/icons/visa-card.svg"
 
 import styles from "./index.module.scss";
 
@@ -78,8 +80,8 @@ export const FormInput: React.FC<IProps> = ({
       )}
       {visa && (
         <>
-          <img className={styles.mastercard} src="/icons/master-card.svg" />
-          <img className={styles.visacard} src="/icons/visa-card.svg" />
+          <img className={styles.mastercard} src={masterCardIcon} />
+          <img className={styles.visacard} src={visaCardIcon} />
         </>
       )}
       {/* {error && (

@@ -21,6 +21,7 @@ import { Button } from "src/components/common";
 import { StepMarker } from "./StepMarker";
 import { FormInput } from "./FormInput";
 
+import formatStringUtil from 'src/util/formatString';
 
 import styles from "./index.module.scss";
 
@@ -341,10 +342,15 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
     }
     return true;
   };
+
+  const onSubmit = () => {
+    nextStep({ cardName, cardNumber, expiryDate, cvv });
+  }
+
   return (
     <form
       className={styles.formWrapper}
-      onSubmit={() => nextStep({ cardName, cardNumber, expiryDate, cvv })}
+      onSubmit={onSubmit}
     >
       <div className={styles.header}>
         <IconButton
@@ -380,22 +386,24 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
           <FormInput
             label="Card Number"
           visa={true}
-          value={cardNumber}
+          value={formatStringUtil.creditCard(cardNumber)}
           error={errCardNumber !== ""}
           errMsg={errCardNumber}
           onChange={(e) => {
+            const value = e.target.value;
+            // Get only the first 16 characters and remove white space.
+            const trimmedValue = value.replace(/ /g,'').substring(0,16);
+            const data = e.nativeEvent.data;
             if (
-              (e.nativeEvent.data >= "0" && e.nativeEvent.data <= "9") ||
-              e.nativeEvent.data === null
-            ) {
-              if (e.target.value.length !== 16) {
+              (data >= "0" && data <= "9") || data === null) {
+              if (trimmedValue.length !== 16) {
                 setErrCardNumber("Card Number should be 16 digit");
               } else {
                 setErrCardNumber("");
               }
               dispatch(
                 setState({
-                  cardNumber: e.target.value,
+                  cardNumber: trimmedValue,
                 }),
               );
             }
