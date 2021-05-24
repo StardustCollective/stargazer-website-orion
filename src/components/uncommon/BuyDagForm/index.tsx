@@ -30,6 +30,8 @@ interface IProps {
   currency: string;
   onValueChange: (e) => void;
   value?: string;
+  errMsg?: string;
+  error?: boolean;
 }
 
 interface FIWProps {
@@ -39,48 +41,52 @@ interface FIWProps {
 
 const DAG_PRICE_URL = "https://www.stargazer.network/api/price?symbol=DAG-USDT";
 
-export const FormItemWrapper: React.FC<FIWProps> = ({
-  children,
-  label,
-}: FIWProps) => {
-  return (
-    <div>
-      <span>{label}</span>
-      {children}
-    </div>
-  );
-};
-
 export const FormItem: React.FC<IProps> = ({
   label,
   expandable,
   logoUrl,
   currency,
   onValueChange,
+  error,
+  errMsg,
   value,
 }: IProps) => {
+
   return (
-    <div className={styles.item}>
-      <span className={styles.label}>{label}</span>
-      <input placeholder="0.0" onChange={onValueChange} value={value} />
-      <span className={styles.splitter}></span>
-      <div className={styles.currencySelector}>
-        <img className={styles.logo} src={logoUrl} />
-        <span className={styles.currency}>{currency}</span>
-        {expandable && <ExpandMoreIcon />}
+    <div className={styles.itemWrapper}>
+      <div className={styles.labelWrapper} >
+        {error && (
+          <span className={classnames(styles.label, { [styles.error]: error })}>
+            {errMsg}
+          </span>
+          )
+        }
+      </div>
+      <div className={classnames(styles.item, { [styles.error]: error })}>
+        <span className={styles.innerLabel}>{label}</span>
+        <input placeholder="0.0" onChange={onValueChange} value={value} />
+        <span className={styles.splitter}></span>
+        <div className={styles.currencySelector}>
+          <img className={styles.logo} src={logoUrl} />
+          <span className={styles.currency}>{currency}</span>
+          {expandable && <ExpandMoreIcon />}
+        </div>
       </div>
     </div>
+
   );
 };
 
 export const Card: React.FC = () => {
   return (
-    <div className={classnames(styles.item, styles.credit)}>
-      <CreditCardIcon />
-      <span className={classnames(styles.label, styles.credit)}>New Card</span>
-
-      <img src={MasterCardIcon} />
-      <img src={VisaCardIcon} />
+    <div className={styles.itemWrapper}>
+      <div className={styles.labelWrapper} />
+      <div className={classnames(styles.item, styles.credit)}>
+        <CreditCardIcon />
+        <span className={classnames(styles.innerLabel, styles.credit)}>New Card</span>
+        <img src={MasterCardIcon} />
+        <img src={VisaCardIcon} />
+      </div>
     </div>
   );
 };
@@ -162,7 +168,7 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
       setUsdValue((nDag * conversionRate).toFixed(2));
     }
   };
-  
+
   return (
     <div className={styles.formWrapper}>
       <div className={styles.header}>
