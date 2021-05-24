@@ -21,7 +21,13 @@ import { Button } from "src/components/common";
 import { StepMarker } from "./StepMarker";
 import { FormInput } from "./FormInput";
 
+
 import styles from "./index.module.scss";
+
+const MIN_SPEND_ERROR_STRING = 'The Minimum Spend is $10';
+const MAX_SPEND_ERROR_STRING = 'The Maximum Spend is $1000';
+const MAX_SPEND_NUMBER = 1000;
+const MIN_SPEND_NUMBER = 10;
 
 interface IProps {
   label: string;
@@ -30,6 +36,8 @@ interface IProps {
   currency: string;
   onValueChange: (e) => void;
   value?: string;
+  errMsg?: string;
+  error?: boolean;
 }
 
 interface FIWProps {
@@ -39,48 +47,52 @@ interface FIWProps {
 
 const DAG_PRICE_URL = "https://www.stargazer.network/api/price?symbol=DAG-USDT";
 
-export const FormItemWrapper: React.FC<FIWProps> = ({
-  children,
-  label,
-}: FIWProps) => {
-  return (
-    <div>
-      <span>{label}</span>
-      {children}
-    </div>
-  );
-};
-
 export const FormItem: React.FC<IProps> = ({
   label,
   expandable,
   logoUrl,
   currency,
   onValueChange,
+  error,
+  errMsg,
   value,
 }: IProps) => {
+
   return (
-    <div className={styles.item}>
-      <span className={styles.label}>{label}</span>
-      <input placeholder="0.0" onChange={onValueChange} value={value} />
-      <span className={styles.splitter}></span>
-      <div className={styles.currencySelector}>
-        <img className={styles.logo} src={logoUrl} />
-        <span className={styles.currency}>{currency}</span>
-        {expandable && <ExpandMoreIcon />}
+    <div className={styles.itemWrapper}>
+      <div className={styles.labelWrapper} >
+        {error && (
+          <span className={classnames(styles.label, { [styles.error]: error })}>
+            {errMsg}
+          </span>
+          )
+        }
+      </div>
+      <div className={classnames(styles.item, { [styles.error]: error })}>
+        <span className={styles.innerLabel}>{label}</span>
+        <input placeholder="0.0" onChange={onValueChange} value={value} />
+        <span className={styles.splitter}></span>
+        <div className={styles.currencySelector}>
+          <img className={styles.logo} src={logoUrl} />
+          <span className={styles.currency}>{currency}</span>
+          {expandable && <ExpandMoreIcon />}
+        </div>
       </div>
     </div>
+
   );
 };
 
 export const Card: React.FC = () => {
   return (
-    <div className={classnames(styles.item, styles.credit)}>
-      <CreditCardIcon />
-      <span className={classnames(styles.label, styles.credit)}>New Card</span>
-
-      <img src={MasterCardIcon} />
-      <img src={VisaCardIcon} />
+    <div className={styles.itemWrapper}>
+      <div className={styles.labelWrapper} />
+      <div className={classnames(styles.item, styles.credit)}>
+        <CreditCardIcon />
+        <span className={classnames(styles.innerLabel, styles.credit)}>New Card</span>
+        <img src={MasterCardIcon} />
+        <img src={VisaCardIcon} />
+      </div>
     </div>
   );
 };
@@ -95,9 +107,26 @@ type LastPrice = {
 };
 
 export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
+
   const dispatch = useDispatch();
   const [lastPrice, setLastPrice] = useState<LastPrice>({ amount: 0, time: 0 });
   const { usdValue, dagValue } = useSelector((root: RootState) => root.buyDag);
+  const [isSpendError, setIsSpendError] = useState<boolean>(false);
+  const [spendErrorMessage, setSpendErrorMessage] = useState<string>(MIN_SPEND_ERROR_STRING);
+
+  useEffect( () => {
+    if(usdValue > 0 && usdValue < MIN_SPEND_NUMBER){
+      // alert('The minimum spend is $10')
+      setIsSpendError(true);
+      setSpendErrorMessage(MIN_SPEND_ERROR_STRING);
+    }else if(usdValue > MAX_SPEND_NUMBER){
+      // alert('The maximum spend is $10000')
+      setIsSpendError(true);
+      setSpendErrorMessage(MAX_SPEND_ERROR_STRING);
+    }else{
+      setIsSpendError(false);
+    }
+  }, [usdValue]);
 
   useEffect(() => {
     dispatch(
@@ -162,7 +191,7 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
       setUsdValue((nDag * conversionRate).toFixed(2));
     }
   };
-  
+
   return (
     <div className={styles.formWrapper}>
       <div className={styles.header}>
@@ -174,6 +203,8 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
           expandable={true}
           logoUrl={UsdIcon}
           currency="USD"
+          error={isSpendError}
+          errMsg={spendErrorMessage}
           onValueChange={handleUsdValueChange}
           value={usdValue !== 0 ? usdValue.toString() : ""}
         />
@@ -193,7 +224,7 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
           theme="primary"
           variant={styles.button}
           onClick={() => nextStep(usdValue, dagValue)}
-          disabled={usdValue === 0 || dagValue === 0}
+          disabled={usdValue === 0 || dagValue === 0 || usdValue < MIN_SPEND_NUMBER || usdValue > MAX_SPEND_NUMBER}
         >
           Buy DAG
         </Button>
@@ -300,8 +331,9 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
       </div>
       <div className={styles.body}>
         {/* <StepMarker currentStep={1} /> */}
-        <FormInput
-          label="Name on Card"
+        <div className={styles.creditCardForm} >
+          <FormInput
+            label="Name on Card"
           value={cardName}
           error={errCardName !== ""}
           errMsg={errCardName}
@@ -316,10 +348,10 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
                 cardName: e.target.value,
               }),
             );
-          }}
-        />
-        <FormInput
-          label="Card Number"
+            }}
+          />
+          <FormInput
+            label="Card Number"
           visa={true}
           value={cardNumber}
           error={errCardNumber !== ""}
@@ -340,9 +372,9 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
                 }),
               );
             }
-          }}
-        />
-        <div className={styles.halfWrapper}>
+            }}
+          />
+          <div className={styles.halfWrapper}>
           <FormInput
             label="Expiry Date"
             placeholder="MM/YY"
@@ -414,8 +446,8 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
             errMsg={errCvv}
           />
         </div>
-        <FormInput
-          label="E-mail"
+          <FormInput
+            label="E-mail"
           value={email}
           placeholder="johndoe@example.com"
           error={errEmail !== ""}
@@ -431,16 +463,17 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
                 email: e.target.value,
               }),
             );
-          }}
-        />
-        <Button
-          type="submit"
-          theme="success"
-          variant={styles.button}
-          disabled={checkDisabled()}
-        >
-          Pay Now
-        </Button>
+            }}
+          />
+          <Button
+            type="submit"
+            theme="success"
+            variant={styles.button}
+            disabled={checkDisabled()}
+          >
+            Pay Now
+          </Button>
+        </div>
       </div>
     </form>
   );
