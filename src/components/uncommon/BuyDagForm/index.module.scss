@@ -35,7 +35,10 @@
     height: 396px;
     box-sizing: border-box;
     position: relative;
-
+    
+    .creditCardForm {
+      padding-top: 24px;
+    }
     .labelRow {
       display: flex;
       width: 100%;
@@ -171,6 +174,7 @@
       }
     }
     &.transactionReceipt {
+      padding-top: 20px;
       justify-content: flex-start;
       align-items: center;
       display: flex;

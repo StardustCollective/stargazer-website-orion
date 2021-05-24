@@ -331,8 +331,9 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
       </div>
       <div className={styles.body}>
         {/* <StepMarker currentStep={1} /> */}
-        <FormInput
-          label="Name on Card"
+        <div className={styles.creditCardForm} >
+          <FormInput
+            label="Name on Card"
           value={cardName}
           error={errCardName !== ""}
           errMsg={errCardName}
@@ -347,10 +348,10 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
                 cardName: e.target.value,
               }),
             );
-          }}
-        />
-        <FormInput
-          label="Card Number"
+            }}
+          />
+          <FormInput
+            label="Card Number"
           visa={true}
           value={cardNumber}
           error={errCardNumber !== ""}
@@ -371,9 +372,9 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
                 }),
               );
             }
-          }}
-        />
-        <div className={styles.halfWrapper}>
+            }}
+          />
+          <div className={styles.halfWrapper}>
           <FormInput
             label="Expiry Date"
             placeholder="MM/YY"
@@ -445,8 +446,8 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
             errMsg={errCvv}
           />
         </div>
-        <FormInput
-          label="E-mail"
+          <FormInput
+            label="E-mail"
           value={email}
           placeholder="johndoe@example.com"
           error={errEmail !== ""}
@@ -462,16 +463,17 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
                 email: e.target.value,
               }),
             );
-          }}
-        />
-        <Button
-          type="submit"
-          theme="success"
-          variant={styles.button}
-          disabled={checkDisabled()}
-        >
-          Pay Now
-        </Button>
+            }}
+          />
+          <Button
+            type="submit"
+            theme="success"
+            variant={styles.button}
+            disabled={checkDisabled()}
+          >
+            Pay Now
+          </Button>
+        </div>
       </div>
     </form>
   );
