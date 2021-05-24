@@ -1,6 +1,8 @@
 import { Button } from "src/components/common";
 import React, { FC } from "react";
 
+import logo from "src/assets/images/logo.svg";
+
 import styles from "./index.module.scss";
 
 interface IConnectStargazer {
@@ -35,7 +37,7 @@ const ConnectStargazer: FC<IConnectStargazer> = ({
         <div className={styles.title}>Connect with Stargazer Wallet</div>
       </div>
       <div className={styles.body}>
-        <img src="/images/logo.svg" width="160" />
+        <img src={logo} width="160" />
         <label>
           To buy DAG with your credit card, click on the button below.
         </label>
