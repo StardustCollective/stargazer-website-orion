@@ -11,7 +11,7 @@ import {
 } from "src/components/feature/buyDag/purchaseForm";
 
 import styles from "./index.module.scss";
-import ConnectStargazer from "src/components/feature/buyDag/ConnectStargazer";
+import ConnectStargazer from "src/components/feature/buyDag/connectStargazer";
 
 const BuyDag: React.FC = () => {
   const {
