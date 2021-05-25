@@ -17,7 +17,7 @@ import DagIcon from 'src/assets/icons/dag.svg';
 
 import { setState } from "src/redux/actions";
 import { RootState } from "src/redux/reducers";
-import { Button } from "src/components/common";
+import { Button } from "src/components/base";
 import { StepMarker } from "./StepMarker";
 import { FormInput } from "./FormInput";
 

@@ -1,4 +1,4 @@
-import { Button } from "src/components/common";
+import { Button } from "src/components/base";
 import React, { FC } from "react";
 
 import logo from "src/assets/images/logo.svg";
