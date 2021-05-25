@@ -2,7 +2,49 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+
+# Folder Structure
+
+Before diving into developing features for the Stargazer Website it's important to understand how
+everything is structured in the source code.
+
+## Folders
+### `• components/`
+These directories contain the components that are used throughout the app, the components are split up
+into three types; base, composed, and feature.
+
+| Sub Directory      | Description |
+| ----------- | ----------- |
+| base/       | Components in this directory are reusable dumb components that are used to build composed components. | 
+| composed/   | Components in this directory are reusable, dumb, and made up of two or more base components.   | 
+| feature/    | Components in this directory are made up of one or more composed components, can be smart, and solve a feature specific problem.     |
+## FAQ
+### 1. How to know if the component your building is a base, composed, or feature component?
+
+- A base component:
+    - Solves a very specific UI problem.
+    - Dumb.
+    - Reusable.
+    - Examples: Input, Text, Button, Icon, Link etc..
+- A composed component:
+    - Solves a specific UI problem.
+    - Made up of 2 or more base components.
+    - Reusable.
+    - Dumb
+    - Examples: Tab Bar, Menu, Header, Search Bar; a search bar is composed of a input and button component.
+- A feature components
+    - Solves a feature specific problem.
+    - Smart
+    - May or may not be reusable.
+    - Made up of one or more composed components.
+    - Example:  A component that collects user registration information. A component that converts DAG to USD.
+
+
+### 2. I'm building a feature component in which sub-folder does it belong?
+In `feature/` you will find that each sub folder matches with the folders found in `page/` there is 1 to 1 relationship.
+Save your component to the sub directory that matches the page where you will be implementing your feature.
+
+# Available Scripts
 
 In the project directory, you can run:
 
