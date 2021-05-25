@@ -17,9 +17,13 @@ into three types; base, composed, and feature.
 | ----------- | ----------- |
 | base/       | Components in this directory are reusable dumb components that are used to build composed components. | 
 | composed/   | Components in this directory are reusable, dumb, and made up of two or more base components.   | 
-| feature/    | Components in this directory are made up of one or more composed components, can be smart, and solve a feature specific problem.     |
+| feature/    | Components in this directory are made up of one or more composed components, can be smart, and solve a feature specific problem. |  
+| navigation/ | Components in this directory deal with the navigation UI ex. header, side bar, footer|   
+
+<br />
+
 ## FAQ
-### 1. How to know if the component your building is a base, composed, or feature component?
+### 1. How do I know if the component I'm developing is a base, composed, or feature component?
 
 - A base component:
     - Solves a very specific UI problem.
