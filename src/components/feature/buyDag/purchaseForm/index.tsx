@@ -19,7 +19,7 @@ import { setState } from "src/redux/actions";
 import { RootState } from "src/redux/reducers";
 import { Button } from "src/components/base";
 import { StepMarker } from "./StepMarker";
-import { FormInput } from "./FormInput";
+import { FormInput } from "src/components/base/formInput";
 
 import formatStringUtil from 'src/util/formatString';
 
