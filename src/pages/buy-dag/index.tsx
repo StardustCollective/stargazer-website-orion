@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 import { RootState } from "src/redux/reducers";
-import { Layout } from "src/components/common";
+
 import {
   BuyDagForm,
   BuyDagFormStep1,
   // BuyDagFormStep2,
   TransactionReceipt,
-} from "src/components/uncommon/BuyDagForm";
+} from "src/components/feature/buyDag/purchaseForm";
 
 import styles from "./index.module.scss";
-import ConnectStargazer from "src/components/uncommon/ConnectStargazer";
+import ConnectStargazer from "src/components/feature/buyDag/ConnectStargazer";
 
 const BuyDag: React.FC = () => {
   const {

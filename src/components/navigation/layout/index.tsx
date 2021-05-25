@@ -1,4 +1,4 @@
-import { Header, Sidebar } from "src/components/common";
+import { Header, Sidebar } from "src/components/navigation";
 import styles from "./index.module.scss";
 
 export const Layout: React.FC = ({ children }) => {

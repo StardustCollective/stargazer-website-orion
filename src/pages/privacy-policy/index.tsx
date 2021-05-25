@@ -1,6 +1,5 @@
 import React from "react";
 import logo from "src/assets/images/bottom-logo.svg"
-import { Layout } from "src/components/common";
 
 import styles from "./index.module.scss";
 
