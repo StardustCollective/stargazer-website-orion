@@ -20,6 +20,7 @@ const BuyDag: React.FC = () => {
     cardName,
     cardNumber,
     expiryDate,
+    postalCode,
     cvv,
     email,
   } = useSelector((root: RootState) => root.buyDag);
@@ -98,6 +99,7 @@ const BuyDag: React.FC = () => {
           name: cardName,
           expYear: Number(`20${expiryDate.split("/")[1]}`),
           expMonth: Number(expiryDate.split("/")[0]),
+          zip: postalCode || null
         },
       };
       fetch("https://portal.stargazer.network/api/v1/buy-dag/purchase", {

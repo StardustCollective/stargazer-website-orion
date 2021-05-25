@@ -25,8 +25,8 @@ import formatStringUtil from 'src/util/formatString';
 
 import styles from "./index.module.scss";
 
-const MIN_SPEND_ERROR_STRING = 'The Minimum Spend is $10';
-const MAX_SPEND_ERROR_STRING = 'The Maximum Spend is $1000';
+const MIN_SPEND_ERROR_STRING = 'minimum amount is $10';
+const MAX_SPEND_ERROR_STRING = 'maximum amount is $1000';
 const MAX_SPEND_NUMBER = 1000;
 const MIN_SPEND_NUMBER = 10;
 
@@ -185,7 +185,8 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
       const nUsd = Math.min(1000, parseFloat(inputValue));
       setUsdValue(nUsd);
       const conversionRate = await getDagPrice();
-      setDagValue((nUsd / conversionRate).toFixed(8));
+      setDagValue(((nUsd * 0.95) / conversionRate).toFixed(8));
+      //setDagValue((nUsd / conversionRate).toFixed(8));
     }
   };
 
@@ -197,11 +198,12 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
     } else if (isFinite(inputValue)) {
       const conversionRate = await getDagPrice();
       let nDag: any = parseFloat(inputValue);
-      //let usdValue = (nDag * conversionRate) / 0.95;
-      let usdValue = nDag * conversionRate;
+      let usdValue = (nDag * conversionRate) / 0.95;
+      //let usdValue = nDag * conversionRate;
       if (usdValue > 1000) {
         usdValue = 1000;
-        //nDag = (usdValue * 0.95) / conversionRate;
+        nDag = (usdValue * 0.95) / conversionRate;
+        nDag = usdValue / conversionRate;
         nDag = nDag.toFixed(Math.min(8, nDag.toString().length));
       }
       setDagValue(nDag);
@@ -263,14 +265,14 @@ export const BuyDagForm: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
 
 interface BDF1Prop {
   prevStep: () => void;
-  nextStep: ({ cardName, cardNumber, expiryDate, cvv }) => void;
+  nextStep: ({ cardName, cardNumber, expiryDate, cvv, postalCode }) => void;
 }
 export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
   prevStep,
   nextStep,
 }: BDF1Prop) => {
   const dispatch = useDispatch();
-  const { cardName, cardNumber, expiryDate, cvv, email } = useSelector(
+  const { cardName, cardNumber, expiryDate, cvv, email, postalCode } = useSelector(
     (root: RootState) => root.buyDag,
   );
   const [errCardName, setErrCardName] = useState("");
@@ -278,6 +280,7 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
   const [errExpDate, setErrExpDate] = useState("");
   const [errCvv, setErrCvv] = useState("");
   const [errEmail, setErrEmail] = useState("");
+  const [errPostalCode, setErrPostalCode] = useState("");
 
   useEffect(() => {
     dispatch(
@@ -305,6 +308,11 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
         email: "",
       }),
     );
+    dispatch(
+      setState({
+        postalCode: "",
+      }),
+    );
   }, []);
 
   const validDate = (dValue) => {
@@ -328,7 +336,7 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
     return re.test(String(email).toLowerCase());
   };
   const checkDisabled = () => {
-    if (expiryDate && cvv && cardName && cardNumber && email) {
+    if (expiryDate && cvv && cardName && cardNumber && email && postalCode) {
       if (
         cardName.length === 0 ||
         cardNumber.length !== 16 ||
@@ -344,7 +352,7 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
   };
 
   const onSubmit = () => {
-    nextStep({ cardName, cardNumber, expiryDate, cvv });
+    nextStep({ cardName, cardNumber, expiryDate, cvv, postalCode });
   }
 
   return (
@@ -409,9 +417,9 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
             }
             }}
           />
-          <div className={styles.halfWrapper}>
+          <div className={styles.threeSplitWrapper}>
           <FormInput
-            label="Expiry Date"
+            label="Expiry date"
             placeholder="MM/YY"
             value={expiryDate}
             error={errExpDate !== ""}
@@ -480,6 +488,25 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
             error={errCvv !== ""}
             errMsg={errCvv}
           />
+          <FormInput
+            label="Postal code"
+            placeholder="Postal"
+            value={postalCode}
+            onChange={(e) => {
+              if (e.target.value === "") {
+                setErrPostalCode("Postal code is invalid");
+              } else {
+                setErrPostalCode("");
+              }
+              dispatch(
+                setState({
+                  postalCode: e.target.value,
+                }),
+              );
+            }}
+            error={errPostalCode !== ""}
+            errMsg={errPostalCode}
+          />
         </div>
           <FormInput
             label="E-mail"
@@ -500,6 +527,7 @@ export const BuyDagFormStep1: React.FC<BDF1Prop> = ({
             );
             }}
           />
+
           <Button
             type="submit"
             theme="success"

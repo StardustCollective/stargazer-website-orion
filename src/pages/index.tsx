@@ -56,7 +56,7 @@ const PAGE_TITLES = {
 const PAGE_ROUTES = {
   home: "/",
   connectWallet: "/connect-wallet",
-  getDag: "/get-dag",
+  getDag: "/buy-dag",
   portfolio: "/portfolio",
   swap: "/swap",
   terminal: "/terminal",
