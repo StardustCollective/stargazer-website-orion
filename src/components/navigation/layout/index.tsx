@@ -1,5 +1,6 @@
 import { Header, Sidebar } from "src/components/navigation";
 import styles from "./index.module.scss";
+import bottomLogo from 'src/assets/images/bottom-logo.svg';
 
 export const Layout: React.FC = ({ children }) => {
   return (
@@ -12,7 +13,7 @@ export const Layout: React.FC = ({ children }) => {
           <div className={styles.bottomLogoWrapper}>
             <img
               className={styles.bottomLogo}
-              src="/images/bottom-logo.svg"
+              src={bottomLogo}
               alt="logo"
             />
           </div>
