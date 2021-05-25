@@ -16,9 +16,9 @@ into three types; base, composed, and feature.
 | Sub Directory      | Description |
 | ----------- | ----------- |
 | base/       | Components in this directory are reusable dumb components that are used to build composed components. | 
-| composed/   | Components in this directory are reusable, dumb, and made up of two or more base components.   | 
+| composed/   | Components in this directory are reusable, dumb, and made up of two or more base components and also be made of other composed components.   | 
 | feature/    | Components in this directory are made up of one or more composed components, can be smart, and solve a feature specific problem. |  
-| navigation/ | Components in this directory deal with the navigation UI ex. header, side bar, footer|   
+| navigation/ | Components in this directory deal with the navigation UI. ex. header, side bar, footer. |   
 
 <br />
 
