@@ -4,16 +4,11 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import classnames from "classnames";
 
 ///////////////////////////
 // Image Imports 
 ///////////////////////////
 
-
-import CreditCardIcon from "@material-ui/icons/CreditCard";
-import MasterCardIcon from "src/assets/icons/master-card.svg";
-import VisaCardIcon from "src/assets/icons/visa-card.svg"
 import UsdIcon from "src/assets/icons/usd.svg";
 import DagIcon from 'src/assets/icons/dag.svg';
 
@@ -22,7 +17,8 @@ import DagIcon from 'src/assets/icons/dag.svg';
 ///////////////////////////
 
 import { Button } from "src/components/base";
-import { CurrencyInput } from "src/components/composed";
+import { CurrencyInput, CreditCardSelection } from "src/components/composed";
+
 
 ///////////////////////////
 // Redux Imports 
@@ -51,7 +47,6 @@ const DAG_PRICE_URL = "https://www.stargazer.network/api/price?symbol=DAG-USDT";
 ///////////////////////////
 // Interfaces
 ///////////////////////////
-
 interface BDFProp {
     nextStep: (usdValue, dagValue) => void;
   }
@@ -61,27 +56,11 @@ type LastPrice = {
   time: number;
 };
   
-export const CreditCardSelection: React.FC = () => {
-  return (
-    <div className={styles.itemWrapper}>
-      <div className={styles.labelWrapper} />
-      <div className={classnames(styles.item, styles.credit)}>
-        <CreditCardIcon />
-        <span className={classnames(styles.innerLabel, styles.credit)}>New Card</span>
-        <img src={MasterCardIcon} />
-        <img src={VisaCardIcon} />
-      </div>
-    </div>
-  );
-};
-
-
 ///////////////////////////
 // Component
 ///////////////////////////
 
-
-export const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
+const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
 
   const dispatch = useDispatch();
   const [lastPrice, setLastPrice] = useState<LastPrice>({ amount: 0, time: 0 });
