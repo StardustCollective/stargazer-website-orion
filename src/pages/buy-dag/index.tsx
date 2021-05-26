@@ -4,11 +4,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "src/redux/reducers";
 
 import {
-  BuyDagForm,
+  // BuyDagForm,
   BuyDagFormStep1,
   // BuyDagFormStep2,
   TransactionReceipt,
 } from "src/components/feature/buyDag/purchaseForm";
+
+import StepOneGetDag from 'src/components/feature/buyDag/purchaseForm/stepOneGetDag';
+
 
 import styles from "./index.module.scss";
 import ConnectStargazer from "src/components/feature/buyDag/connectStargazer";
@@ -135,7 +138,7 @@ const BuyDag: React.FC = () => {
     switch (step) {
       case 1:
         return (
-          <BuyDagForm
+          <StepOneGetDag
             nextStep={() => {
               setStep(2);
             }}
