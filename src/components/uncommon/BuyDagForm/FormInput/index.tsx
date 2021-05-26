@@ -48,7 +48,7 @@ export const FormInput: React.FC<IProps> = ({
     <div className={styles.formInput}>
       <span className={classnames(styles.label, { [styles.error]: error })}>
         {label}
-        {error && <span>{` (${errMsg})`}</span>}
+        {/*{error && <span>{` (${errMsg})`}</span>}*/}
       </span>
       {country ? (
         <>

@@ -1,13 +1,23 @@
 {
   "hosting": {
-    "public": "out",
+    "public": "build",
     "ignore": [
+      "src",
+      "public",
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
     "headers": [
-      { "source":"/service-worker.js", "headers": [{"key": "Cache-Control", "value": "no-cache"}] }
+      {
+        "source": "/index.html",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
     ],
     "rewrites": [
       {
@@ -19,5 +29,13 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "emulators": {
+    "hosting": {
+      "port": 3000
+    },
+    "ui": {
+      "enabled": true
+    }
   }
 }
