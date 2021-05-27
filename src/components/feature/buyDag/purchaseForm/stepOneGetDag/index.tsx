@@ -16,7 +16,6 @@ import DagIcon from 'src/assets/icons/dag.svg';
 // ANCHOR Component Imports 
 ///////////////////////////
 
-import { Button } from "src/components/base";
 import { CurrencyInput, CreditCardSelection } from "src/components/composed";
 import PurchaseFormContainer from '../purchaseFormContainer';
 
@@ -46,25 +45,23 @@ const MIN_SPEND_NUMBER = 10;
 // URLs
 const DAG_PRICE_URL = "https://www.stargazer.network/api/price?symbol=DAG-USDT";
 
-
 ///////////////////////////
 // ANCHOR Interfaces
 ///////////////////////////
 interface BDFProp {
-    nextStep: (usdValue, dagValue) => void;
-  }
-  
+  nextStep: (usdValue, dagValue) => void;
+}
+
 type LastPrice = {
   amount: number;
   time: number;
 };
-  
+
 ///////////////////////////
 // ANCHOR Component
 ///////////////////////////
 
 const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
-
 
   ///////////////////////////
   // ANCHOR Hooks
@@ -76,9 +73,9 @@ const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
   const [isSpendError, setIsSpendError] = useState<boolean>(false);
   const [spendErrorMessage, setSpendErrorMessage] = useState<string>(MIN_SPEND_ERROR_STRING);
   const [MAINTENANCE, setMaintenance] = useState<boolean>(false);
-  const buyDagButtonDisabled = usdValue === 0 || 
-  dagValue === 0 || usdValue < MIN_SPEND_NUMBER || 
-  usdValue > MAX_SPEND_NUMBER || MAINTENANCE;
+  const buyDagButtonDisabled = usdValue === 0 ||
+    dagValue === 0 || usdValue < MIN_SPEND_NUMBER ||
+    usdValue > MAX_SPEND_NUMBER || MAINTENANCE;
 
   // useEffect(() => {
   //   window["stargazer"].request({ method: "getNetwork" }).then((network) => {
@@ -86,16 +83,16 @@ const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
   //   });
   // }, []);
 
-  useEffect( () => {
-    if(usdValue > 0 && usdValue < MIN_SPEND_NUMBER){
+  useEffect(() => {
+    if (usdValue > 0 && usdValue < MIN_SPEND_NUMBER) {
       // alert('The minimum spend is $10')
       setIsSpendError(true);
       setSpendErrorMessage(MIN_SPEND_ERROR_STRING);
-    }else if(usdValue > MAX_SPEND_NUMBER){
+    } else if (usdValue > MAX_SPEND_NUMBER) {
       // alert('The maximum spend is $10000')
       setIsSpendError(true);
       setSpendErrorMessage(MAX_SPEND_ERROR_STRING);
-    }else{
+    } else {
       setIsSpendError(false);
     }
   }, [usdValue]);
@@ -187,13 +184,13 @@ const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
   ///////////////////////////
 
   return (
-
-    <PurchaseFormContainer
-      headerLabel="Get Dag"
-      confirmButtonLabel="Get DAG"
-      confirmButtonDisabled={buyDagButtonDisabled}
-      onConfirmButtonClick={onConfirmButtonClick}
-    >
+    <div>
+      <PurchaseFormContainer
+        headerLabel="Get Dag"
+        confirmButtonLabel="Get DAG"
+        confirmButtonDisabled={buyDagButtonDisabled}
+        onConfirmButtonClick={onConfirmButtonClick}
+      >
         <CurrencyInput
           label="Donate"
           expandable={false}
@@ -221,12 +218,13 @@ const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
           All proceeds are going to the Stardust Foundation. <br></br>30% of the
           processing fees are going to nonprofit organizations from Givebox.
         </div>
+      </PurchaseFormContainer>
       {MAINTENANCE && (
         <div className={styles.serviceDown}>
           *The service is down for maintenance and will be back soon.
         </div>
       )}
-    </PurchaseFormContainer>
+    </div>
   );
 };
 
