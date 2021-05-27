@@ -38,6 +38,7 @@ interface IPurchaseFromContainerProps {
   onConfirmButtonClick?: () => void;
   confirmButtonLabel?: string;
   confirmButtonTheme?: "primary" | "success";
+  confirmButtonType?: "button" | "submit"
 };
 
 ///////////////////////////
@@ -54,6 +55,7 @@ const purchaseFormContainer: React.FC<IPurchaseFromContainerProps> = ({
   confirmButtonDisabled,
   confirmButtonTheme = "primary",
   onConfirmButtonClick,
+  confirmButtonType = "button",
   children,
 }) => {
 
@@ -79,7 +81,7 @@ const purchaseFormContainer: React.FC<IPurchaseFromContainerProps> = ({
         {children}
         {showConfirmButton && (
           <Button
-            type="button"
+            type={confirmButtonType}
             theme={confirmButtonTheme}
             variant={styles.button}
             onClick={onConfirmButtonClick}
