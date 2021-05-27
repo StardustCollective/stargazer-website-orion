@@ -73,7 +73,7 @@ export const FormItem: React.FC<IProps> = ({
       </div>
       <div className={classnames(styles.item, { [styles.error]: error })}>
         <span className={styles.innerLabel}>{label}</span>
-        <input placeholder="0.0" onChange={onValueChange} value={value} />
+        <input placeholder="0.0" onChange={onValueChange} value={value} disabled={disabled} />
         <span className={styles.splitter}></span>
         <div className={styles.currencySelector}>
           <img className={styles.logo} src={logoUrl} />
