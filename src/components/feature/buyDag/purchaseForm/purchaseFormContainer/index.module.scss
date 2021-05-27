@@ -1,0 +1,43 @@
+@import "src/styles/global.scss";
+
+.purchaseFormContainer {
+  width: 324px;
+  height: 456px;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  margin-right: 24px;
+  .header {
+    padding: 22px 24px 21px 24px;
+    border-bottom: 1px solid $gray-light;
+    display: flex;
+    align-items: center;
+
+    .backButton {
+      width: 16px;
+      height: 16px;
+      margin-right: 12px;
+    }
+
+    .title {
+      font-family: Inter;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 17px;
+      color: $black;
+    }
+  }
+  .body {
+    margin: 0 24px;
+    height: 396px;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .button {
+    width: 100%;
+    position: absolute;
+    bottom: 24px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  }
+}
