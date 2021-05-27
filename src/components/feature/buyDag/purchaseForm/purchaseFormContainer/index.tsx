@@ -31,12 +31,13 @@ import styles from "./index.module.scss";
 interface IPurchaseFromContainerProps {
   headerLabel: string;
   showBackButton?: boolean;
-  onBackButtonClick?: undefined;
+  onBackButtonClick?: () => void;
   onSubmitClick?: React.FormEventHandler;
   showConfirmButton?: boolean;
   confirmButtonDisabled?: boolean;
   onConfirmButtonClick?: () => void;
   confirmButtonLabel?: string;
+  confirmButtonTheme?: "primary" | "success";
 };
 
 ///////////////////////////
@@ -51,6 +52,7 @@ const purchaseFormContainer: React.FC<IPurchaseFromContainerProps> = ({
   confirmButtonLabel,
   showConfirmButton = true,
   confirmButtonDisabled,
+  confirmButtonTheme = "primary",
   onConfirmButtonClick,
   children,
 }) => {
@@ -78,7 +80,7 @@ const purchaseFormContainer: React.FC<IPurchaseFromContainerProps> = ({
         {showConfirmButton && (
           <Button
             type="button"
-            theme="primary"
+            theme={confirmButtonTheme}
             variant={styles.button}
             onClick={onConfirmButtonClick}
             disabled={confirmButtonDisabled}
