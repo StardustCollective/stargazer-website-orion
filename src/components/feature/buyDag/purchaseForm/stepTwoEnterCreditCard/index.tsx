@@ -149,6 +149,7 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
       confirmButtonDisabled={checkDisabled()}
       confirmButtonLabel="Pay Now"
       confirmButtonTheme="success"
+      confirmButtonType="submit"
       headerLabel="Donate with card"
       showBackButton={true}
       onBackButtonClick={prevStep}
