@@ -1,51 +1,54 @@
 ///////////////////////////
-// Module Imports 
+// ANCHOR Module Imports 
 ///////////////////////////
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 ///////////////////////////
-// Image Imports 
+// ANCHOR Image Imports 
 ///////////////////////////
 
 import UsdIcon from "src/assets/icons/usd.svg";
 import DagIcon from 'src/assets/icons/dag.svg';
 
 ///////////////////////////
-// Component Imports 
+// ANCHOR Component Imports 
 ///////////////////////////
 
 import { Button } from "src/components/base";
 import { CurrencyInput, CreditCardSelection } from "src/components/composed";
-
+import PurchaseFormContainer from '../purchaseFormContainer';
 
 ///////////////////////////
-// Redux Imports 
+// ANCHOR Redux Imports 
 ///////////////////////////
 
 import { setState } from "src/redux/actions";
 import { RootState } from "src/redux/reducers";
 
 ///////////////////////////
-// Style Imports 
+// ANCHOR Style Imports 
 ///////////////////////////
 
 import styles from "./index.module.scss";
 
 ///////////////////////////
-// Constants
+// ANCHOR Constants
 ///////////////////////////
 
+// Strings
 const MIN_SPEND_ERROR_STRING = 'The Minimum Spend is $10';
 const MAX_SPEND_ERROR_STRING = 'The Maximum Spend is $1000';
+// Numbers
 const MAX_SPEND_NUMBER = 1000;
 const MIN_SPEND_NUMBER = 10;
+// URLs
 const DAG_PRICE_URL = "https://www.stargazer.network/api/price?symbol=DAG-USDT";
 
 
 ///////////////////////////
-// Interfaces
+// ANCHOR Interfaces
 ///////////////////////////
 interface BDFProp {
     nextStep: (usdValue, dagValue) => void;
@@ -57,10 +60,15 @@ type LastPrice = {
 };
   
 ///////////////////////////
-// Component
+// ANCHOR Component
 ///////////////////////////
 
 const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
+
+
+  ///////////////////////////
+  // ANCHOR Hooks
+  ///////////////////////////
 
   const dispatch = useDispatch();
   const [lastPrice, setLastPrice] = useState<LastPrice>({ amount: 0, time: 0 });
@@ -68,6 +76,9 @@ const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
   const [isSpendError, setIsSpendError] = useState<boolean>(false);
   const [spendErrorMessage, setSpendErrorMessage] = useState<string>(MIN_SPEND_ERROR_STRING);
   const [MAINTENANCE, setMaintenance] = useState<boolean>(false);
+  const buyDagButtonDisabled = usdValue === 0 || 
+  dagValue === 0 || usdValue < MIN_SPEND_NUMBER || 
+  usdValue > MAX_SPEND_NUMBER || MAINTENANCE;
 
   // useEffect(() => {
   //   window["stargazer"].request({ method: "getNetwork" }).then((network) => {
@@ -117,6 +128,11 @@ const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
     );
   };
 
+
+  ///////////////////////////
+  // ANCHOR Callbacks
+  ///////////////////////////
+
   const getDagPrice = async () => {
     // console.log(lastPrice.time, Date.now());
     if (lastPrice.time + 15000 > Date.now()) {
@@ -162,12 +178,22 @@ const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
     }
   };
 
+  const onConfirmButtonClick = () => {
+    nextStep(usdValue, dagValue);
+  };
+
+  ///////////////////////////
+  // ANCHOR Render
+  ///////////////////////////
+
   return (
-    <div className={styles.formWrapper}>
-      <div className={styles.header}>
-        <div className={styles.title}>Get Dag</div>
-      </div>
-      <div className={styles.body}>
+
+    <PurchaseFormContainer
+      headerLabel="Get Dag"
+      confirmButtonLabel="Get DAG"
+      confirmButtonDisabled={buyDagButtonDisabled}
+      onConfirmButtonClick={onConfirmButtonClick}
+    >
         <CurrencyInput
           label="Donate"
           expandable={false}
@@ -195,22 +221,12 @@ const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
           All proceeds are going to the Stardust Foundation. <br></br>30% of the
           processing fees are going to nonprofit organizations from Givebox.
         </div>
-        <Button
-          type="button"
-          theme="primary"
-          variant={styles.button}
-          onClick={() => nextStep(usdValue, dagValue)}
-          disabled={usdValue === 0 || dagValue === 0 || usdValue < MIN_SPEND_NUMBER || usdValue > MAX_SPEND_NUMBER || MAINTENANCE}
-        >
-          Get DAG
-        </Button>
-      </div>
       {MAINTENANCE && (
         <div className={styles.serviceDown}>
           *The service is down for maintenance and will be back soon.
         </div>
       )}
-    </div>
+    </PurchaseFormContainer>
   );
 };
 
