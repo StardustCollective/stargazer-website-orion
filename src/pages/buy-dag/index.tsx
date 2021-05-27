@@ -11,6 +11,7 @@ import {
 } from "src/components/feature/buyDag/purchaseForm";
 
 import StepOneGetDag from 'src/components/feature/buyDag/purchaseForm/stepOneGetDag';
+import StepTwoEnterCreditCard from 'src/components/feature/buyDag/purchaseForm/stepTwoEnterCreditCard';
 
 
 import styles from "./index.module.scss";
@@ -146,7 +147,7 @@ const BuyDag: React.FC = () => {
         );
       case 2:
         return (
-          <BuyDagFormStep1
+          <StepTwoEnterCreditCard
             prevStep={() => {
               setStep(1);
             }}
