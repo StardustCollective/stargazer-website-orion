@@ -1,18 +1,36 @@
+///////////////////////////
+// ANCHOR Module Imports 
+///////////////////////////
+
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-import { RootState } from "src/redux/reducers";
+///////////////////////////
+// ANCHOR Component Imports 
+///////////////////////////
 
 import {
   StepOneGetDag,
   StepTwoEnterCreditCard,
   StepThreeTransactionReceipt,
 } from "src/components/feature/buyDag/purchaseForm";
-
 import ConnectStargazer from "src/components/feature/buyDag/connectStargazer";
+
+///////////////////////////
+// ANCHOR Redux Imports 
+///////////////////////////
+
+import { RootState } from "src/redux/reducers";
+
+///////////////////////////
+// ANCHOR Style Imports 
+///////////////////////////
 
 import styles from "./index.module.scss";
 
+///////////////////////////
+// ANCHOR Component
+///////////////////////////
 
 const BuyDag: React.FC = () => {
   const {
@@ -25,21 +43,16 @@ const BuyDag: React.FC = () => {
     email,
   } = useSelector((root: RootState) => root.buyDag);
 
+  ///////////////////////////
+  // ANCHOR Hooks
+  ///////////////////////////
+
   const [transactionLoading, setTransactionLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [isConnected, setConnected] = useState<boolean>(false);
   const [isWalletInstalled, setWalletInstalled] = useState<boolean>(false);
 
   const [receipt, setReceipt] = useState({});
-
-  const markAsInstalledAndCheckConnected = () => {
-    setWalletInstalled(true);
-
-    window["stargazer"]
-      .isConnected()
-      .then((result) => setConnected(result.connected));
-
-  };
 
   React.useEffect(() => {
     if (window["stargazer"]) {
@@ -52,6 +65,22 @@ const BuyDag: React.FC = () => {
       }, 3000);
     }
   }, []);
+
+  ///////////////////////////
+  // ANCHOR Helpers
+  ///////////////////////////
+
+  const markAsInstalledAndCheckConnected = () => {
+    setWalletInstalled(true);
+
+    window["stargazer"]
+      .isConnected()
+      .then((result) => setConnected(result.connected));
+  };
+
+  ///////////////////////////
+  // ANCHOR Callbacks
+  ///////////////////////////
 
   const handleDagSignMessage = (message) => {
     return window["stargazer"]
@@ -120,6 +149,10 @@ const BuyDag: React.FC = () => {
         .catch((err) => console.log(err));
     });
   };
+
+  ///////////////////////////
+  // ANCHOR Render
+  ///////////////////////////
 
   const renderForm = () => {
     if (!isConnected) {
