@@ -37,8 +37,8 @@ import styles from "./index.module.scss";
 ///////////////////////////
 
 // Strings
-const MIN_SPEND_ERROR_STRING = 'The Minimum Spend is $10';
-const MAX_SPEND_ERROR_STRING = 'The Maximum Spend is $1000';
+const MIN_SPEND_ERROR_STRING = 'minimum amount is $10';
+const MAX_SPEND_ERROR_STRING = 'maximum amount is $1000';
 // Numbers
 const MAX_SPEND_NUMBER = 1000;
 const MIN_SPEND_NUMBER = 10;
@@ -151,7 +151,7 @@ const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
       const nUsd = Math.min(1000, parseFloat(inputValue));
       setUsdValue(nUsd);
       const conversionRate = await getDagPrice();
-      setDagValue((nUsd / conversionRate).toFixed(8));
+      setDagValue(((nUsd * 0.95) / conversionRate).toFixed(8));
     }
   };
 
@@ -163,11 +163,12 @@ const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
     } else if (isFinite(inputValue)) {
       const conversionRate = await getDagPrice();
       let nDag: any = parseFloat(inputValue);
-      //let usdValue = (nDag * conversionRate) / 0.95;
-      let usdValue = nDag * conversionRate;
+      let usdValue = (nDag * conversionRate) / 0.95;
+      // let usdValue = nDag * conversionRate;
       if (usdValue > 1000) {
         usdValue = 1000;
-        //nDag = (usdValue * 0.95) / conversionRate;
+        nDag = (usdValue * 0.95) / conversionRate;
+        nDag = usdValue / conversionRate;
         nDag = nDag.toFixed(Math.min(8, nDag.toString().length));
       }
       setDagValue(nDag);

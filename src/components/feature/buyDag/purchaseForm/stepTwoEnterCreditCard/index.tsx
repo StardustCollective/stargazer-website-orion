@@ -37,7 +37,7 @@ import styles from "./index.module.scss";
 
 interface BDF1Prop {
   prevStep: () => void;
-  nextStep: ({ cardName, cardNumber, expiryDate, cvv }) => void;
+  nextStep: ({ cardName, cardNumber, expiryDate, cvv, postalCode }) => void;
 }
 
 ///////////////////////////
@@ -54,7 +54,7 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
   ///////////////////////////
 
   const dispatch = useDispatch();
-  const { cardName, cardNumber, expiryDate, cvv, email } = useSelector(
+  const { cardName, cardNumber, expiryDate, cvv, email, postalCode } = useSelector(
     (root: RootState) => root.buyDag,
   );
   const [errCardName, setErrCardName] = useState("");
@@ -62,6 +62,7 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
   const [errExpDate, setErrExpDate] = useState("");
   const [errCvv, setErrCvv] = useState("");
   const [errEmail, setErrEmail] = useState("");
+  const [errPostalCode, setErrPostalCode] = useState("");
 
   useEffect(() => {
     dispatch(
@@ -87,6 +88,11 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
     dispatch(
       setState({
         email: "",
+      }),
+    );
+    dispatch(
+      setState({
+        postalCode: "",
       }),
     );
   }, []);
@@ -117,7 +123,7 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
     return re.test(String(email).toLowerCase());
   };
   const checkDisabled = () => {
-    if (expiryDate && cvv && cardName && cardNumber && email) {
+    if (expiryDate && cvv && cardName && cardNumber && email && postalCode) {
       if (
         cardName.length === 0 ||
         cardNumber.length !== 16 ||
@@ -137,7 +143,7 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
   ///////////////////////////
 
   const onSubmit = () => {
-    nextStep({ cardName, cardNumber, expiryDate, cvv });
+    nextStep({ cardName, cardNumber, expiryDate, cvv, postalCode });
   }
 
   ///////////////////////////
@@ -200,9 +206,9 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
             }
           }}
         />
-        <div className={styles.halfWrapper}>
+        <div className={styles.threeSplitWrapper}>
           <FormInput
-            label="Expiry Date"
+            label="Expiry date"
             placeholder="MM/YY"
             value={expiryDate}
             error={errExpDate !== ""}
@@ -270,6 +276,25 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
             }}
             error={errCvv !== ""}
             errMsg={errCvv}
+          />
+          <FormInput
+            label="Postal code"
+            placeholder="Postal"
+            value={postalCode}
+            onChange={(e) => {
+              if (e.target.value === "") {
+                setErrPostalCode("Postal code is invalid");
+              } else {
+                setErrPostalCode("");
+              }
+              dispatch(
+                setState({
+                  postalCode: e.target.value,
+                }),
+              );
+            }}
+            error={errPostalCode !== ""}
+            errMsg={errPostalCode}
           />
         </div>
         <FormInput
