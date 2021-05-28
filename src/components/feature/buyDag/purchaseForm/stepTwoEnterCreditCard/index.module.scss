@@ -1,0 +1,12 @@
+@import "src/styles/global.scss";
+
+.creditCardFormContainer {
+  padding-top: 24px;
+
+  .threeSplitWrapper {
+    display: grid;
+    grid-template-columns: 84px 84px 84px;;
+    grid-gap: 12px;
+  }
+}
+

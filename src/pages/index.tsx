@@ -9,7 +9,7 @@ import { Switch, Redirect, Route, BrowserRouter as Router } from "react-router-d
 // Components
 /////////////////////////
 
-import { Layout } from "src/components/common";
+import { Layout } from "src/components/navigation";
 
 /////////////////////////
 // Interfaces

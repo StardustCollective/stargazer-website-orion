@@ -1,0 +1,94 @@
+@import "src/styles/global.scss";
+
+.formInput {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  position: relative;
+  .label {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 12px;
+    color: $black;
+    padding-bottom: 10px;
+    &.error {
+      color: #f00 !important;
+    }
+  }
+  input {
+    border: 1px solid #e3e3e3;
+    box-sizing: border-box;
+    border-radius: 6px;
+    height: 36px;
+    padding: 12px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
+    color: $black;
+    &::placeholder {
+      color: $gray-light;
+    }
+    &.error {
+      border-color: #f00 !important;
+    }
+  }
+  input.creditCard {
+    padding-right: 66px !important;
+  }
+  img.mastercard {
+    position: absolute;
+    width: 20px;
+    height: 12px;
+    top: 37px;
+    right: 36px;
+  }
+  img.visacard {
+    position: absolute;
+    width: 20px;
+    height: 6px;
+    top: 40px;
+    right: 13px;
+  }
+  &:last-child {
+    margin-bottom: 0 !important;
+  }
+  button {
+    position: inherit !important;
+    bottom: 0 !important;
+    font-size: 12px !important;
+    border: 1px solid #e3e3e3;
+    border-radius: 6px;
+    height: 36px;
+    box-sizing: border-box;
+    padding: 12px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
+    color: $black;
+    box-shadow: none !important;
+    &::after {
+      display: none !important;
+    }
+  }
+  svg.expandMore {
+    position: absolute;
+    top: 32px;
+    right: 8px;
+  }
+  // .error {
+  //   .errMsg {
+  //     color: red;
+  //     font-size: 8px;
+  //   }
+  // }
+}

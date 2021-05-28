@@ -1,17 +1,36 @@
+///////////////////////////
+// ANCHOR Module Imports 
+///////////////////////////
+
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
-import { RootState } from "src/redux/reducers";
-import { Layout } from "src/components/common";
+///////////////////////////
+// ANCHOR Component Imports 
+///////////////////////////
+
 import {
-  BuyDagForm,
-  BuyDagFormStep1,
-  // BuyDagFormStep2,
-  TransactionReceipt,
-} from "src/components/uncommon/BuyDagForm";
+  StepOneGetDag,
+  StepTwoEnterCreditCard,
+  StepThreeTransactionReceipt,
+} from "src/components/feature/buyDag/purchaseForm";
+import ConnectStargazer from "src/components/feature/buyDag/connectStargazer";
+
+///////////////////////////
+// ANCHOR Redux Imports 
+///////////////////////////
+
+import { RootState } from "src/redux/reducers";
+
+///////////////////////////
+// ANCHOR Style Imports 
+///////////////////////////
 
 import styles from "./index.module.scss";
-import ConnectStargazer from "src/components/uncommon/ConnectStargazer";
+
+///////////////////////////
+// ANCHOR Component
+///////////////////////////
 
 const BuyDag: React.FC = () => {
   const {
@@ -24,22 +43,17 @@ const BuyDag: React.FC = () => {
     cvv,
     email,
   } = useSelector((root: RootState) => root.buyDag);
+
+  ///////////////////////////
+  // ANCHOR Hooks
+  ///////////////////////////
+
   const [transactionLoading, setTransactionLoading] = useState(false);
   const [step, setStep] = useState(1);
-
   const [isConnected, setConnected] = useState<boolean>(false);
   const [isWalletInstalled, setWalletInstalled] = useState<boolean>(false);
 
   const [receipt, setReceipt] = useState({});
-
-  const markAsInstalledAndCheckConnected = () => {
-    setWalletInstalled(true);
-
-    window["stargazer"]
-      .isConnected()
-      .then((result) => setConnected(result.connected));
-
-  };
 
   React.useEffect(() => {
     if (window["stargazer"]) {
@@ -52,6 +66,22 @@ const BuyDag: React.FC = () => {
       }, 3000);
     }
   }, []);
+
+  ///////////////////////////
+  // ANCHOR Helpers
+  ///////////////////////////
+
+  const markAsInstalledAndCheckConnected = () => {
+    setWalletInstalled(true);
+
+    window["stargazer"]
+      .isConnected()
+      .then((result) => setConnected(result.connected));
+  };
+
+  ///////////////////////////
+  // ANCHOR Callbacks
+  ///////////////////////////
 
   const handleDagSignMessage = (message) => {
     return window["stargazer"]
@@ -122,6 +152,10 @@ const BuyDag: React.FC = () => {
     });
   };
 
+  ///////////////////////////
+  // ANCHOR Render
+  ///////////////////////////
+
   const renderForm = () => {
     if (!isConnected) {
       return (
@@ -137,7 +171,7 @@ const BuyDag: React.FC = () => {
     switch (step) {
       case 1:
         return (
-          <BuyDagForm
+          <StepOneGetDag
             nextStep={() => {
               setStep(2);
             }}
@@ -145,7 +179,7 @@ const BuyDag: React.FC = () => {
         );
       case 2:
         return (
-          <BuyDagFormStep1
+          <StepTwoEnterCreditCard
             prevStep={() => {
               setStep(1);
             }}
@@ -158,7 +192,7 @@ const BuyDag: React.FC = () => {
         );
       case 3:
         return (
-          <TransactionReceipt
+          <StepThreeTransactionReceipt
             loading={transactionLoading}
             receipt={receipt}
             onDone={() => {
