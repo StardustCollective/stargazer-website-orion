@@ -4,18 +4,15 @@ import { useSelector } from "react-redux";
 import { RootState } from "src/redux/reducers";
 
 import {
-  // BuyDagForm,
-  BuyDagFormStep1,
-  // BuyDagFormStep2,
-  TransactionReceipt,
+  StepOneGetDag,
+  StepTwoEnterCreditCard,
+  StepThreeTransactionReceipt,
 } from "src/components/feature/buyDag/purchaseForm";
 
-import StepOneGetDag from 'src/components/feature/buyDag/purchaseForm/stepOneGetDag';
-import StepTwoEnterCreditCard from 'src/components/feature/buyDag/purchaseForm/stepTwoEnterCreditCard';
-
+import ConnectStargazer from "src/components/feature/buyDag/connectStargazer";
 
 import styles from "./index.module.scss";
-import ConnectStargazer from "src/components/feature/buyDag/connectStargazer";
+
 
 const BuyDag: React.FC = () => {
   const {
@@ -28,9 +25,9 @@ const BuyDag: React.FC = () => {
     cvv,
     email,
   } = useSelector((root: RootState) => root.buyDag);
+
   const [transactionLoading, setTransactionLoading] = useState(false);
   const [step, setStep] = useState(1);
-
   const [isConnected, setConnected] = useState<boolean>(false);
   const [isWalletInstalled, setWalletInstalled] = useState<boolean>(false);
 
@@ -162,7 +159,7 @@ const BuyDag: React.FC = () => {
         );
       case 3:
         return (
-          <TransactionReceipt
+          <StepThreeTransactionReceipt
             loading={transactionLoading}
             receipt={receipt}
             onDone={() => {
