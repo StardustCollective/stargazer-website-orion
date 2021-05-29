@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./index.module.scss";
-import { Page } from "src/interfaces/page";
+import { Page } from "interfaces/page";
 import get from "lodash/get";
 import {
   getSideBarPages,
   getFooterPages
-} from 'src/pages';
+} from 'pages';
 
 const RenderLinks = ({linkData}): JSX.Element => {
 

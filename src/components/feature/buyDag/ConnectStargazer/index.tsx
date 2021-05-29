@@ -1,7 +1,7 @@
-import { Button } from "src/components/base";
+import { Button } from "components/base";
 import React, { FC } from "react";
 
-import logo from "src/assets/images/logo.svg";
+import logo from "assets/images/logo.svg";
 
 import styles from "./index.module.scss";
 

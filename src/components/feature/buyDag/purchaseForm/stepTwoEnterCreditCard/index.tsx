@@ -9,21 +9,21 @@ import { useDispatch, useSelector } from "react-redux";
 // ANCHOR Component Imports 
 ///////////////////////////
 
-import { FormInput } from "src/components/base/formInput";
+import { FormInput } from "components/base/formInput";
 import PurchaseFormContainer from '../purchaseFormContainer';
 
 ///////////////////////////
 // ANCHOR Util Imports 
 ///////////////////////////
 
-import formatStringUtil from 'src/util/formatString';
+import formatStringUtil from 'util/formatString';
 
 ///////////////////////////
 // ANCHOR Redux Imports 
 ///////////////////////////
 
-import { setState } from "src/redux/actions";
-import { RootState } from "src/redux/reducers";
+import { setState } from "redux/actions";
+import { RootState } from "redux/reducers";
 
 ///////////////////////////
 // ANCHOR Style Imports 

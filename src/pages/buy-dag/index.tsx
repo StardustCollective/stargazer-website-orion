@@ -1,29 +1,29 @@
 ///////////////////////////
-// ANCHOR Module Imports 
+// ANCHOR Module Imports
 ///////////////////////////
 
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
 ///////////////////////////
-// ANCHOR Component Imports 
+// ANCHOR Component Imports
 ///////////////////////////
 
 import {
   StepOneGetDag,
   StepTwoEnterCreditCard,
   StepThreeTransactionReceipt,
-} from "src/components/feature/buyDag/purchaseForm";
-import ConnectStargazer from "src/components/feature/buyDag/connectStargazer";
+} from "components/feature/buyDag/purchaseForm";
+import ConnectStargazer from "components/feature/buyDag/ConnectStargazer";
 
 ///////////////////////////
-// ANCHOR Redux Imports 
+// ANCHOR Redux Imports
 ///////////////////////////
 
-import { RootState } from "src/redux/reducers";
+import { RootState } from "redux/reducers";
 
 ///////////////////////////
-// ANCHOR Style Imports 
+// ANCHOR Style Imports
 ///////////////////////////
 
 import styles from "./index.module.scss";

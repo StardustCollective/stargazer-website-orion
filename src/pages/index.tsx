@@ -9,25 +9,25 @@ import { Switch, Redirect, Route, BrowserRouter as Router } from "react-router-d
 // Components
 /////////////////////////
 
-import { Layout } from "src/components/navigation";
+import { Layout } from "components/navigation";
 
 /////////////////////////
 // Interfaces
 /////////////////////////
 
-import { Page } from "src/interfaces/page";
+import { Page } from "interfaces/page";
 
 /////////////////////////
 // Pages
 /////////////////////////
 
-import BuyDag from "src/pages/buy-dag";
-import ConnectWallet from "src/pages/connect-wallet";
-import Portfolio from "src/pages/portfolio";
-import Swap from "src/pages/swap";
-import Terminal from "src/pages/terminal";
-import TermsAndConditions from "src/pages/terms-and-conditions";
-import PrivacyPolicy from "src/pages/privacy-policy";
+import BuyDag from "pages/buy-dag";
+import ConnectWallet from "pages/connect-wallet";
+import Portfolio from "pages/portfolio";
+import Swap from "pages/swap";
+import Terminal from "pages/terminal";
+import TermsAndConditions from "pages/terms-and-conditions";
+import PrivacyPolicy from "pages/privacy-policy";
 
 /////////////////////////
 // Icons

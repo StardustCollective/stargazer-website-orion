@@ -3,8 +3,8 @@ import classnames from "classnames";
 import ReactFlagsSelect from "react-flags-select";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
-import masterCardIcon from "src/assets/icons/master-card.svg"
-import visaCardIcon from "src/assets/icons/visa-card.svg"
+import masterCardIcon from "assets/icons/master-card.svg"
+import visaCardIcon from "assets/icons/visa-card.svg"
 
 import styles from "./index.module.scss";
 

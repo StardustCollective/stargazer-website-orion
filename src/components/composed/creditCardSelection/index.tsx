@@ -11,8 +11,8 @@ import classnames from "classnames";
 ///////////////////////////
 
 import CreditCardIcon from "@material-ui/icons/CreditCard";
-import MasterCardIcon from "src/assets/icons/master-card.svg";
-import VisaCardIcon from "src/assets/icons/visa-card.svg"
+import MasterCardIcon from "assets/icons/master-card.svg";
+import VisaCardIcon from "assets/icons/visa-card.svg"
 
 ///////////////////////////
 // Style Imports 

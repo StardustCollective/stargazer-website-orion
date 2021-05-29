@@ -9,7 +9,7 @@ import React from "react";
 // Component Imports 
 ///////////////////////////
 
-import { Button } from "src/components/base";
+import { Button } from "components/base";
 
 ///////////////////////////
 // Image Imports
