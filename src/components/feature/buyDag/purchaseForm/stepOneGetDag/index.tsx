@@ -9,22 +9,22 @@ import { useDispatch, useSelector } from "react-redux";
 // ANCHOR Image Imports 
 ///////////////////////////
 
-import UsdIcon from "src/assets/icons/usd.svg";
-import DagIcon from 'src/assets/icons/dag.svg';
+import UsdIcon from "assets/icons/usd.svg";
+import DagIcon from 'assets/icons/dag.svg';
 
 ///////////////////////////
 // ANCHOR Component Imports 
 ///////////////////////////
 
-import { CurrencyInput, CreditCardSelection } from "src/components/composed";
+import { CurrencyInput, CreditCardSelection } from "components/composed";
 import PurchaseFormContainer from '../purchaseFormContainer';
 
 ///////////////////////////
 // ANCHOR Redux Imports 
 ///////////////////////////
 
-import { setState } from "src/redux/actions";
-import { RootState } from "src/redux/reducers";
+import { setState } from "redux/actions";
+import { RootState } from "redux/reducers";
 
 ///////////////////////////
 // ANCHOR Style Imports 

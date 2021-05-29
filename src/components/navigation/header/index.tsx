@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AppsSharpIcon from "@material-ui/icons/AppsSharp";
 import { IconButton } from "@material-ui/core";
 import styles from "./index.module.scss";
-import LogoImage from "src/assets/images/logo.png";
+import LogoImage from "assets/images/logo.png";
 
 export const Header: React.FC = () => {
   let currentAccount;

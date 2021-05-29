@@ -1,6 +1,6 @@
-import { Header, Sidebar } from "src/components/navigation";
+import { Header, Sidebar } from "components/navigation";
 import styles from "./index.module.scss";
-import bottomLogo from 'src/assets/images/bottom-logo.svg';
+import bottomLogo from 'assets/images/bottom-logo.svg';
 
 export const Layout: React.FC = ({ children }) => {
   return (

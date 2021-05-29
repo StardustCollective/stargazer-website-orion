@@ -1,1 +1,1 @@
-export { setState } from "src/redux/slices/buy-dag";
+export { setState } from "redux/slices/buy-dag";
