@@ -83,24 +83,15 @@ const BuyDag: React.FC = () => {
   // ANCHOR Callbacks
   ///////////////////////////
 
-  const handleDagSignMessage = (message) => {
-    return window["stargazer"]
-      .request({ method: "getAddress" })
-      .then((currentAccount) => {
-        return window["stargazer"]
-          .request({ method: "getNetwork" })
-          .then((network) => {
-            return window["stargazer"]
-              .request({
-                method: "signMessage",
-                params: [message, currentAccount],
-              })
-              .then((sig) => {
-                // console.log("SIG", sig);
-                return { address: currentAccount, sig, network };
-              });
-          });
-      });
+  const handleDagSignMessage =  async (message) => {
+    let currentAccount = await window["stargazer"].request({ method: "getAddress"});
+    let network = await window['stargazer'].request({ method: "getNetwork"});
+    let sig = await window['stargazer'].request({ 
+      method: "signMessage", 
+      params: [message, currentAccount]
+    });
+    
+    return { address: currentAccount, sig, network };
   };
 
   const handleSubmitRequest = () => {
