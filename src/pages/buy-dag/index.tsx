@@ -2,7 +2,7 @@
 // ANCHOR Module Imports
 ///////////////////////////
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 ///////////////////////////
@@ -55,15 +55,15 @@ const BuyDag: React.FC = () => {
 
   const [receipt, setReceipt] = useState({});
 
-  React.useEffect(() => {
-    if (window["stargazer"]) {
-      markAsInstalledAndCheckConnected();
-    } else {
-      setTimeout(() => {
-        if (window["stargazer"]) {
-          markAsInstalledAndCheckConnected();
-        }
-      }, 3000);
+  useEffect(() => {
+    const onPageShow = () => {
+      if (window["stargazer"]) {
+        markAsInstalledAndCheckConnected();
+      }
+    }
+    window.addEventListener('pageshow', onPageShow);
+    return () => {
+      window.removeEventListener('pageshow', onPageShow);
     }
   }, []);
 
