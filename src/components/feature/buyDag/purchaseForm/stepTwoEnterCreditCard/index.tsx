@@ -20,10 +20,10 @@ import formatStringUtil from 'util/formatString';
 
 ///////////////////////////
 // ANCHOR Redux Imports 
-///////////////////////////
+///////////////////////////s
 
-import { setState } from "redux/actions";
-import { RootState } from "redux/reducers";
+import { actions as buyDagActions } from "redux/states/buyDag";
+import { RootState } from "redux/config/reducers";
 
 ///////////////////////////
 // ANCHOR Style Imports 
@@ -66,32 +66,32 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
 
   useEffect(() => {
     dispatch(
-      setState({
+      buyDagActions.setPaymentInfo({
         cardName: "",
       }),
     );
     dispatch(
-      setState({
+      buyDagActions.setPaymentInfo({
         cardNumber: "",
       }),
     );
     dispatch(
-      setState({
+      buyDagActions.setPaymentInfo({
         expiryDate: "",
       }),
     );
     dispatch(
-      setState({
+      buyDagActions.setPaymentInfo({
         cvv: "",
       }),
     );
     dispatch(
-      setState({
+      buyDagActions.setPaymentInfo({
         email: "",
       }),
     );
     dispatch(
-      setState({
+      buyDagActions.setPaymentInfo({
         postalCode: "",
       }),
     );
@@ -174,7 +174,7 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
               setErrCardName("");
             }
             dispatch(
-              setState({
+              buyDagActions.setPaymentInfo({
                 cardName: e.target.value,
               }),
             );
@@ -199,7 +199,7 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
                 setErrCardNumber("");
               }
               dispatch(
-                setState({
+                buyDagActions.setPaymentInfo({
                   cardNumber: trimmedValue,
                 }),
               );
@@ -247,7 +247,7 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
                 setErrExpDate("");
               }
               dispatch(
-                setState({
+                buyDagActions.setPaymentInfo({
                   expiryDate: value,
                 }),
               );
@@ -268,7 +268,7 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
                   setErrCvv("");
                 }
                 dispatch(
-                  setState({
+                  buyDagActions.setPaymentInfo({
                     cvv: e.target.value,
                   }),
                 );
@@ -288,7 +288,7 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
                 setErrPostalCode("");
               }
               dispatch(
-                setState({
+                buyDagActions.setPaymentInfo({
                   postalCode: e.target.value,
                 }),
               );
@@ -310,7 +310,7 @@ const StepTwoEnterCreditCard: React.FC<BDF1Prop> = ({
               setErrEmail("");
             }
             dispatch(
-              setState({
+              buyDagActions.setPaymentInfo({
                 email: e.target.value,
               }),
             );
