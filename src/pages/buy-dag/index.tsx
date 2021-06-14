@@ -4,6 +4,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import PurchaseBuilder from "api/builders/purchase.builder";
+import buyDag from "api/buyDag";
 
 ///////////////////////////
 // ANCHOR Component Imports
@@ -83,64 +85,48 @@ const BuyDag: React.FC = () => {
   // ANCHOR Callbacks
   ///////////////////////////
 
-  const handleDagSignMessage =  async (message) => {
-    let currentAccount = await window["stargazer"].request({ method: "getAddress"});
-    let network = await window['stargazer'].request({ method: "getNetwork"});
-    let sig = await window['stargazer'].request({ 
-      method: "signMessage", 
+  const handleDagSignMessage = async (message) => {
+    const currentAccount = await window["stargazer"].request({ method: "getAddress" });
+    const network = await window['stargazer'].request({ method: "getNetwork" });
+    const sig = await window['stargazer'].request({
+      method: "signMessage",
       params: [message, currentAccount]
     });
-    
+
     return { address: currentAccount, sig, network };
   };
 
-  const handleSubmitRequest = () => {
+  const handleSubmitRequest = async () => {
     const statement = `I am donating ${usdValue} USD and receiving ${dagValue} DAG`;
-    handleDagSignMessage(statement).then(({ address, sig, network }) => {
-      if (!sig) {
-        setStep(2);
-        return;
-      }
-      const body = {
-        auth: { token: sig },
-        order: {
-          asset: "DAG",
-          network,
-          quantity: +dagValue,
-          amountUSD: Math.floor(usdValue * 100),
-          tokenAddress: address,
-          statement,
-        },
-        customer: {
-          email: email,
-        },
-        paymethod: {
-          number: cardNumber,
-          cvv: cvv,
-          name: cardName,
-          expYear: Number(`20${expiryDate.split("/")[1]}`),
-          expMonth: Number(expiryDate.split("/")[0]),
-          zip: postalCode || null
-        },
-      };
-      fetch("https://portal.stargazer.network/api/v1/buy-dag/purchase", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
+    const { address, sig, network } = await handleDagSignMessage(statement);
+    if (!sig) {
+      setStep(2);
+      return;
+    }
+
+    try {
+      const results = await buyDag.purchase({
+        authToken: sig,
+        orderAsset: "DAG",
+        orderNetwork: network,
+        orderQuantity: dagValue,
+        orderAmountUsd: usdValue,
+        orderTokenAddress: address,
+        orderStatement: statement,
+        customerEmail: email,
+        cardNumber: cardNumber,
+        cardCvv: cvv,
+        cardName: cardName,
+        cardExpiration: expiryDate,
+        cardZipCode: postalCode,
       })
-        .then(async (res) => {
-          const result = await res.json();
-          // if (!res.ok) {
-          //   throw result;
-          // }
-          // console.log(result);
-          setReceipt(result);
-          setTransactionLoading(false);
-        })
-        .catch((err) => console.log(err));
-    });
+      if (results) {
+        setReceipt(results);
+        setTransactionLoading(false);
+      }
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   ///////////////////////////
