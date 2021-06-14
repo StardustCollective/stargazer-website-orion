@@ -4,7 +4,7 @@ import React from "react";
 import "./styles/global.scss";
 import "./styles/index.scss";
 import { Provider } from "react-redux";
-import store from "./redux/store";
+import store from "./redux/config/store";
 import { LoadPages } from './pages';
 
 function App() {

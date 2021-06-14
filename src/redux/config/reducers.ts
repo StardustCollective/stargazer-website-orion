@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import buyDag from "./slices/buy-dag";
+import {reducer as buyDag} from "redux/states/buyDag";
 
 const rootReducer = combineReducers({ buyDag });
 

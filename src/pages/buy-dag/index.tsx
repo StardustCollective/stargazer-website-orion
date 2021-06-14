@@ -22,7 +22,7 @@ import ConnectStargazer from "components/feature/buyDag/ConnectStargazer";
 // ANCHOR Redux Imports
 ///////////////////////////
 
-import { RootState } from "redux/reducers";
+import { RootState } from "redux/config/reducers";
 
 ///////////////////////////
 // ANCHOR Style Imports

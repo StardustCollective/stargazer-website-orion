@@ -23,8 +23,8 @@ import PurchaseFormContainer from '../purchaseFormContainer';
 // ANCHOR Redux Imports 
 ///////////////////////////
 
-import { setState } from "redux/actions";
-import { RootState } from "redux/reducers";
+import { actions as buyDagActions } from "redux/states/buyDag";
+import { RootState } from "redux/config/reducers";
 
 ///////////////////////////
 // ANCHOR Style Imports 
@@ -99,12 +99,12 @@ const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
 
   useEffect(() => {
     dispatch(
-      setState({
+      buyDagActions.setPaymentInfo({
         usdValue: "",
       }),
     );
     dispatch(
-      setState({
+      buyDagActions.setPaymentInfo({
         dagValue: "",
       }),
     );
@@ -112,14 +112,14 @@ const StepOneGetDag: React.FC<BDFProp> = ({ nextStep }: BDFProp) => {
 
   const setUsdValue = (value) => {
     dispatch(
-      setState({
+      buyDagActions.setPaymentInfo({
         usdValue: value,
       }),
     );
   };
   const setDagValue = (value) => {
     dispatch(
-      setState({
+      buyDagActions.setPaymentInfo({
         dagValue: value,
       }),
     );
